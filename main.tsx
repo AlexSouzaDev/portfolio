@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import WaterReveal from "./WaterReveal";
+import LandingPage from "./LandingPage";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <WaterReveal />
+    <LandingPage />
   </React.StrictMode>
 );
