@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import './LandingPage.css';
+import { GooeyText } from '@/components/ui/gooey-text-morphing';
 
 const CHARS = '0123456789!@#$%^&*-+=/\\|<>{}.,;:~`';
 const PORTFOLIO = 'PORTFOLIO';
@@ -293,7 +294,16 @@ function ExplosionCanvas({
 function WelcomeScreen() {
   return (
     <div className="welcome-container">
-      <h1 className="welcome-text">Welcome to my Portfolio</h1>
+      <GooeyText
+        texts={[
+          "Welcome to my Portfolio",
+          "Hi! I'm Alexandre Souza, Full-stack Developer currently studying Systems and Network in University of Aveiro and working at the ImpulsoLead.AI",
+        ]}
+        morphTime={1.5}
+        cooldownTime={3}
+        className="h-48 w-full max-w-4xl px-8"
+        textClassName="font-heming text-2xl md:text-4xl"
+      />
     </div>
   );
 }

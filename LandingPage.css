@@ -1,3 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heming: "Heming Variable", sans-serif;
+}
+
+@font-face {
+  font-family: 'Heming Variable';
+  src: url('./assets/fonts/Heming Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 .follow-cursor {
   position: fixed;
   top: 0;
