@@ -28,7 +28,7 @@ export function TerminalChat() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [visibleCount, setVisibleCount] = useState(0)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Staggered reveal of initial lines
@@ -50,7 +50,9 @@ export function TerminalChat() {
   }, [visibleCount])
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
   }, [lines, loading])
 
   const sendMessage = async (msg: string) => {
@@ -140,6 +142,7 @@ export function TerminalChat() {
 
           {/* Terminal body */}
           <div
+            ref={scrollRef}
             className="terminal-scroll overflow-y-auto p-6 flex flex-col gap-1"
             style={{
               maxHeight: '420px',
@@ -166,7 +169,6 @@ export function TerminalChat() {
               </p>
             )}
 
-            <div ref={bottomRef} />
           </div>
 
           {/* Input line */}
