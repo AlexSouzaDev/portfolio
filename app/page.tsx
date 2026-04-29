@@ -1,25 +1,25 @@
-import { Hero } from '@/components/sections/Hero'
-import { Marquee } from '@/components/sections/Marquee'
-import { SelectedWork } from '@/components/sections/SelectedWork'
-import { FounderStory } from '@/components/sections/FounderStory'
-import { Capabilities } from '@/components/sections/Capabilities'
-import { Metrics } from '@/components/sections/Metrics'
-import { TerminalChatClient } from '@/components/sections/TerminalChatClient'
-import { Contact } from '@/components/sections/Contact'
-import { Footer } from '@/components/sections/Footer'
+import { HomeHero } from '@/components/sections/HomeHero'
+import { VelocityMarquee } from '@/components/sections/VelocityMarquee'
+import { FeaturedWork } from '@/components/sections/FeaturedWork'
+import { FounderTimeline } from '@/components/sections/FounderTimeline'
+import { CapabilityGrid } from '@/components/sections/CapabilityGrid'
+import { MetricsStrip } from '@/components/sections/MetricsStrip'
+import { ContactSection } from '@/components/sections/ContactSection'
+import { TerminalExperience } from '@/components/terminal/TerminalExperience'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 
 export default function HomePage() {
   return (
     <main>
-      <Hero />
-      <Marquee />
-      <SelectedWork />
-      <FounderStory />
-      <Capabilities />
-      <Metrics />
-      <TerminalChatClient />
-      <Contact />
-      <Footer />
+      <HomeHero />
+      <VelocityMarquee />
+      <FeaturedWork />
+      <FounderTimeline />
+      <CapabilityGrid />
+      <MetricsStrip />
+      <TerminalExperience />
+      <ContactSection />
+      <SiteFooter />
     </main>
   )
 }

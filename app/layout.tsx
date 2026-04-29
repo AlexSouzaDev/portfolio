@@ -1,19 +1,13 @@
 import type { Metadata } from 'next'
-import { Sora, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import { createMetadata } from '@/content/site'
 import { SiteChrome } from '@/components/layout/SiteChrome'
 import { personSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
-const sora = Sora({
-  subsets: ['latin'],
+const hemingway = localFont({
+  src: '../assets/fonts/Heming Variable.ttf',
   variable: '--font-sans',
-  display: 'swap',
-})
-
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -31,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${sora.variable} ${mono.variable}`}>
+    <html lang="en" className={hemingway.variable}>
       <body>
         <SiteChrome>{children}</SiteChrome>
         <script

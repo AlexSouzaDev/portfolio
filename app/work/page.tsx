@@ -1,114 +1,49 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Footer } from '@/components/sections/Footer'
+import { createMetadata, workArchive } from '@/content/site'
+import { PageHero } from '@/components/sections/PageHero'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { ScrambleText } from '@/components/ui/ScrambleText'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 
-export const metadata: Metadata = {
-  title: 'Work',
-  description: 'Full project archive — ImpulsoLead, ImpulsoSearch, AppleVault, Inventory-API, and more.',
-}
-
-const ALL_PROJECTS = [
-  {
-    number: '001',
-    name: 'ImpulsoLead',
-    category: 'AI SaaS / Real Estate / B2B',
-    period: '2024 — Present',
-    description: 'AI-powered B2B SaaS for real estate agents in Brazil.',
-    href: 'https://impulsolead.com',
-    external: true,
-  },
-  {
-    number: '002',
-    name: 'ImpulsoSearch',
-    category: 'AI Search / SaaS',
-    period: '2024 — Present',
-    description: 'AI-powered search layer surfacing real estate leads from unstructured sources.',
-    href: 'https://impulsosearch.com',
-    external: true,
-  },
-  {
-    number: '003',
-    name: 'AppleVault',
-    category: 'Consumer App / Full-Stack',
-    period: '2024',
-    description: 'Instant iPhone resale valuation with personal vault.',
-    href: 'https://github.com/AlexSouzaDev',
-    external: true,
-  },
-  {
-    number: '004',
-    name: 'Inventory-API',
-    category: 'Enterprise API / Python',
-    period: '2024',
-    description: 'ACID-compliant inventory management API with immutable audit log.',
-    href: 'https://github.com/AlexSouzaDev',
-    external: true,
-  },
-]
+export const metadata: Metadata = createMetadata(
+  'Work',
+  'Selected products, system design, and founder-led shipping work by Alex De Souza.',
+  '/work'
+)
 
 export default function WorkPage() {
   return (
     <main>
-      <section className="w-full px-8 py-24">
-        <div
-          className="flex items-baseline justify-between mb-12 pb-4"
-          style={{ borderBottom: '2px solid #2A2A2A' }}
-        >
-          <h1
-            className="font-display font-extrabold"
-            style={{ fontSize: 'clamp(48px, 7vw, 80px)', color: '#F0EBE0' }}
-          >
-            WORK
-          </h1>
-          <Link
-            href="/"
-            className="font-mono text-[12px] uppercase tracking-wider"
-            style={{ color: '#888880' }}
-          >
-            ← BACK
-          </Link>
-        </div>
-
-        <div className="flex flex-col">
-          {ALL_PROJECTS.map((project, i) => (
-            <a
-              key={project.number}
-              href={project.href}
-              target={project.external ? '_blank' : undefined}
-              rel={project.external ? 'noopener noreferrer' : undefined}
-              className="card-hover flex items-center gap-8 py-6 px-6"
-              style={{
-                border: '2px solid #2A2A2A',
-                marginTop: i > 0 ? '-2px' : '0',
-              }}
-            >
-              <span className="font-mono text-[11px] w-8" style={{ color: '#888880' }}>
-                {project.number}
-              </span>
-              <div className="flex-1">
-                <h2
-                  className="font-display font-extrabold text-2xl"
-                  style={{ color: '#F0EBE0' }}
-                >
-                  {project.name}
-                </h2>
-                <p className="font-mono text-[12px] mt-1" style={{ color: '#888880' }}>
-                  {project.description}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="font-mono text-[11px] uppercase" style={{ color: '#888880' }}>
-                  {project.category}
-                </p>
-                <p className="font-mono text-[11px] mt-1" style={{ color: '#888880' }}>
-                  {project.period}
-                </p>
-              </div>
-            </a>
+      <PageHero
+        eyebrow="Work"
+        title="A compact portfolio with actual product pressure behind it."
+        body="I prefer a selective archive: fewer entries, better judgment, stronger systems."
+        cta={{ href: '/contact', label: 'Discuss a build' }}
+      />
+      <section className="px-5 pb-20 sm:px-6 lg:px-8 lg:pb-28">
+        <div className="mx-auto grid max-w-7xl gap-5">
+          {workArchive.map((project, index) => (
+            <FadeIn key={project.title} delay={index * 0.05}>
+              <Link
+                href={project.href}
+                className="group grid gap-5 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 transition hover:border-cyan-200/25 hover:bg-white/[0.05] md:grid-cols-[1.2fr_0.5fr_1fr]"
+                data-cursor-label="VIEW"
+              >
+                <div>
+                  <p className="text-xs uppercase tracking-[0.26em] text-cyan-200/65">{project.type}</p>
+                  <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">
+                    <ScrambleText text={project.title} />
+                  </h2>
+                </div>
+                <p className="text-sm uppercase tracking-[0.24em] text-white/44">{project.year}</p>
+                <p className="text-sm leading-7 text-white/62">{project.description}</p>
+              </Link>
+            </FadeIn>
           ))}
         </div>
       </section>
-      <Footer />
+      <SiteFooter />
     </main>
   )
 }

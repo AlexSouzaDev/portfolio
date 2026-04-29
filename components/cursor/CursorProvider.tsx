@@ -31,7 +31,7 @@ export function CursorProvider({ children }: { children: React.ReactNode }) {
   const dotRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: 0, y: 0 })
   const current = useRef({ x: 0, y: 0 })
-  const raf = useRef<number>()
+  const raf = useRef<number | null>(null)
 
   useEffect(() => {
     if (!supportsHover()) return

@@ -1,124 +1,42 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Footer } from '@/components/sections/Footer'
+import { createMetadata, usesGroups } from '@/content/site'
+import { PageHero } from '@/components/sections/PageHero'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 
-export const metadata: Metadata = {
-  title: 'Uses',
-  description: 'The tools, editor, machine, and stack Alex De Souza uses daily.',
-}
-
-const USES = [
-  {
-    category: 'EDITOR',
-    items: [
-      { label: 'Editor', value: 'VS Code' },
-      { label: 'Theme', value: 'Tokyo Night' },
-      { label: 'Font', value: 'JetBrains Mono 14px' },
-      { label: 'Extensions', value: 'Prettier, ESLint, GitLens, Tailwind IntelliSense' },
-    ],
-  },
-  {
-    category: 'TERMINAL',
-    items: [
-      { label: 'Shell', value: 'Zsh + Oh My Zsh' },
-      { label: 'Multiplexer', value: 'tmux' },
-      { label: 'Theme', value: 'Powerlevel10k' },
-    ],
-  },
-  {
-    category: 'MACHINE',
-    items: [
-      { label: 'Machine', value: 'MacBook Pro' },
-      { label: 'OS', value: 'macOS' },
-      { label: 'Browser', value: 'Chrome (dev) + Arc' },
-    ],
-  },
-  {
-    category: 'AI TOOLS',
-    items: [
-      { label: 'Primary AI', value: 'Claude (Anthropic)' },
-      { label: 'Code assistant', value: 'GitHub Copilot' },
-      { label: 'SDK', value: 'Anthropic SDK (integrated in ImpulsoLead)' },
-    ],
-  },
-  {
-    category: 'DAILY APPS',
-    items: [
-      { label: 'Notes', value: 'Notion' },
-      { label: 'Design', value: 'Figma' },
-      { label: 'API testing', value: 'Bruno / Postman' },
-      { label: 'DB GUI', value: 'TablePlus' },
-      { label: 'Version control', value: 'Git + GitHub' },
-    ],
-  },
-  {
-    category: 'INFRASTRUCTURE',
-    items: [
-      { label: 'Deployment', value: 'Vercel' },
-      { label: 'Database hosting', value: 'Neon (PostgreSQL)' },
-      { label: 'Cache', value: 'Upstash Redis' },
-      { label: 'Auth', value: 'Clerk' },
-      { label: 'Email', value: 'Resend' },
-    ],
-  },
-]
+export const metadata: Metadata = createMetadata(
+  'Uses',
+  'Tools, stack, and operating environment behind Alex De Souza’s workflow.',
+  '/uses'
+)
 
 export default function UsesPage() {
   return (
     <main>
-      <section className="w-full px-8 py-24">
-        <div
-          className="flex items-baseline justify-between mb-12 pb-4"
-          style={{ borderBottom: '2px solid #2A2A2A' }}
-        >
-          <h1
-            className="font-display font-extrabold"
-            style={{ fontSize: 'clamp(48px, 7vw, 80px)', color: '#F0EBE0' }}
-          >
-            USES
-          </h1>
-          <Link
-            href="/"
-            className="font-mono text-[12px] uppercase tracking-wider"
-            style={{ color: '#888880' }}
-          >
-            ← BACK
-          </Link>
-        </div>
-
-        <div className="flex flex-col gap-0">
-          {USES.map((section) => (
-            <div
-              key={section.category}
-              className="py-8"
-              style={{ borderBottom: '1px solid #2A2A2A' }}
-            >
-              <h2
-                className="font-mono text-[11px] uppercase tracking-widest mb-6"
-                style={{ color: '#FFE500' }}
-              >
-                {section.category}
-              </h2>
-              <div className="flex flex-col gap-3">
-                {section.items.map(({ label, value }) => (
-                  <div key={label} className="flex gap-12">
-                    <span
-                      className="font-display font-bold text-[14px] w-40 shrink-0"
-                      style={{ color: '#F0EBE0' }}
-                    >
-                      {label}
-                    </span>
-                    <span className="font-mono text-[14px]" style={{ color: '#888880' }}>
-                      {value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <PageHero
+        eyebrow="Uses"
+        title="A workflow designed for velocity, clarity, and fewer excuses."
+        body="I keep the stack practical. The goal is reducing friction between decision, build, and release."
+      />
+      <section className="px-5 pb-20 sm:px-6 lg:px-8 lg:pb-28">
+        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
+          {usesGroups.map((group, index) => (
+            <FadeIn key={group.title} delay={index * 0.05}>
+              <article className="glass-panel h-full rounded-[2rem] p-6">
+                <h2 className="text-xl font-semibold tracking-[-0.04em] text-white">{group.title}</h2>
+                <div className="mt-6 space-y-4">
+                  {group.items.map((item) => (
+                    <p key={item} className="border-t border-white/10 pt-4 text-sm leading-7 text-white/62">
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </article>
+            </FadeIn>
           ))}
         </div>
       </section>
-      <Footer />
+      <SiteFooter />
     </main>
   )
 }

@@ -1,77 +1,57 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Footer } from '@/components/sections/Footer'
+import { createMetadata } from '@/content/site'
+import { PageHero } from '@/components/sections/PageHero'
+import { FounderTimeline } from '@/components/sections/FounderTimeline'
+import { Accordion } from '@/components/ui/Accordion'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 
-export const metadata: Metadata = {
-  title: 'About',
-  description: 'Alex De Souza — origin story, mission, and the Portugal → Brazil angle.',
-}
+export const metadata: Metadata = createMetadata(
+  'About',
+  'Background, principles, and operating style behind Alex De Souza.',
+  '/about'
+)
 
 export default function AboutPage() {
   return (
     <main>
-      <section className="w-full px-8 py-24 max-w-4xl">
-        <div
-          className="flex items-baseline justify-between mb-12 pb-4"
-          style={{ borderBottom: '2px solid #2A2A2A' }}
-        >
-          <h1
-            className="font-display font-extrabold"
-            style={{ fontSize: 'clamp(48px, 7vw, 80px)', color: '#F0EBE0' }}
-          >
-            ABOUT
-          </h1>
-          <Link
-            href="/"
-            className="font-mono text-[12px] uppercase tracking-wider"
-            style={{ color: '#888880' }}
-          >
-            ← BACK
-          </Link>
-        </div>
-
-        <div className="flex flex-col gap-8">
-          {[
-            {
-              label: 'THE SHORT VERSION',
-              text: "Founder & CTO of ImpulsoLead. Full-stack AI engineer. CS student at the University of Aveiro in Portugal. Building AI-powered SaaS for the Brazilian real estate market.",
-            },
-            {
-              label: 'HOW IT STARTED',
-              text: "I started writing code in 2020. By 2024 I was running a company. The gap between those two facts is a lot of late nights, a lot of shipped code that I had to rewrite, and a progression from HTML files to production AI systems handling real business data.",
-            },
-            {
-              label: 'WHAT I BUILD',
-              text: "I work at the intersection of AI and SaaS infrastructure. Next.js frontends. Python backends. Anthropic SDK integrations. PostgreSQL schemas that don't embarrass me six months later. ImpulsoLead and ImpulsoSearch are production systems — not demos, not prototypes.",
-            },
-            {
-              label: 'PORTUGAL → BRAZIL',
-              text: "I'm based in Aveiro, Portugal. My products serve the Brazilian real estate market. The distance is irrelevant when you ship digitally. The Brazilian real estate market has specific, underserved problems that AI can solve. That's where I'm building.",
-            },
-            {
-              label: 'THE ACADEMIC SIDE',
-              text: "Currently studying Systems and Network Programming at the University of Aveiro. Six certifications across five institutions — Duke MLOps, IBM Generative AI, Microsoft Full-Stack, Microsoft Cybersecurity, UoL Mathematics, CU Boulder SQL. Not because certificates matter, but because the disciplines behind them do.",
-            },
-          ].map(({ label, text }) => (
-            <div
-              key={label}
-              className="flex flex-col gap-3 py-8"
-              style={{ borderBottom: '1px solid #2A2A2A' }}
-            >
-              <h2
-                className="font-mono text-[11px] uppercase tracking-widest"
-                style={{ color: '#FFE500' }}
-              >
-                {label}
-              </h2>
-              <p className="text-[16px] leading-[1.7]" style={{ color: '#888880' }}>
-                {text}
-              </p>
-            </div>
-          ))}
+      <PageHero
+        eyebrow="About"
+        title="I build like a founder because I am one."
+        body="My work sits at the intersection of product judgment, technical depth, and a strong bias toward shipping systems that survive contact with reality."
+      />
+      <FounderTimeline />
+      <section className="px-5 pb-20 sm:px-6 lg:px-8 lg:pb-28">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+          <FadeIn>
+            <h2 className="text-3xl font-semibold tracking-[-0.05em] text-white sm:text-4xl">
+              Operating principles
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-8 text-white/60">
+              I care about clarity, leverage, and product choices that can still look intelligent six months later.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.06}>
+            <Accordion
+              items={[
+                {
+                  title: 'Build for the real bottleneck',
+                  body: 'The right solution is rarely the flashiest one. I start with where time, trust, or decision quality is actually being lost.',
+                },
+                {
+                  title: 'Protect the system while moving quickly',
+                  body: 'Fast shipping matters. So does not creating future drag every time speed is required. I optimize for both.',
+                },
+                {
+                  title: 'Use AI with product logic',
+                  body: 'AI is valuable when it sharpens a workflow, qualifies intent, or increases operator leverage. Everything else is noise.',
+                },
+              ]}
+            />
+          </FadeIn>
         </div>
       </section>
-      <Footer />
+      <SiteFooter />
     </main>
   )
 }

@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next'
+import { site } from '@/content/site'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://alexsouza.dev'
-  const routes = ['', '/work', '/about', '/blog', '/uses', '/contact']
+  const routes = ['', '/work', '/about', '/uses', '/contact']
 
   return routes.map((route) => ({
-    url: `${base}${route}`,
+    url: `${site.url}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: route === '' ? 1 : 0.8,

@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og'
+import { site } from '@/content/site'
 
-export const alt = 'Alex De Souza — Founder & CTO'
+export const alt = site.title
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -9,71 +10,82 @@ export default function OGImage() {
     (
       <div
         style={{
-          width: '100%',
           height: '100%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#0D0D0D',
-          padding: '80px',
+          padding: '72px',
+          background:
+            'radial-gradient(circle at top, rgba(103,161,255,0.25), transparent 28%), linear-gradient(180deg, #0a1322 0%, #07111f 100%)',
+          color: '#f5f9ff',
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Top — monogram */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            width: '60px',
-            height: '60px',
-            border: '2px solid #F0EBE0',
-            color: '#F0EBE0',
-            fontSize: '20px',
-            fontWeight: '800',
+            justifyContent: 'space-between',
           }}
         >
-          AS
-        </div>
-
-        {/* Center — name */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div
             style={{
-              fontSize: '96px',
-              fontWeight: '800',
-              color: '#F0EBE0',
-              lineHeight: '0.9',
-              letterSpacing: '-2px',
+              border: '1px solid rgba(255,255,255,0.18)',
+              borderRadius: '999px',
+              padding: '14px 22px',
+              fontSize: 18,
+              letterSpacing: '0.3em',
             }}
           >
             ALEX DE SOUZA
           </div>
           <div
             style={{
-              fontSize: '24px',
-              color: '#FFE500',
-              fontFamily: 'monospace',
-              letterSpacing: '0.08em',
+              fontSize: 18,
+              color: 'rgba(151,241,255,0.85)',
+              letterSpacing: '0.24em',
+              textTransform: 'uppercase',
             }}
           >
-            FOUNDER &amp; CTO — IMPULSOLEAD
+            Founder Platform
           </div>
         </div>
 
-        {/* Bottom — url */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 860 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              fontSize: 86,
+              fontWeight: 700,
+              lineHeight: 1,
+              letterSpacing: '-0.06em',
+            }}
+          >
+            <span>Founder, Engineer</span>
+            <span>&amp; Product Builder</span>
+          </div>
+          <div style={{ fontSize: 28, lineHeight: 1.4, color: 'rgba(245,249,255,0.72)' }}>
+            Premium digital products, AI systems, and founder-grade execution with real technical depth.
+          </div>
+        </div>
+
         <div
           style={{
-            fontSize: '16px',
-            color: '#888880',
-            fontFamily: 'monospace',
-            letterSpacing: '0.1em',
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: 18,
+            color: 'rgba(245,249,255,0.5)',
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
           }}
         >
-          ALEXSOUZA.DEV
+          <div>Aveiro, Portugal</div>
+          <div>alexsouza.dev</div>
         </div>
       </div>
     ),
-    { ...size }
+    size
   )
 }

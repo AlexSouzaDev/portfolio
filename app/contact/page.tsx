@@ -1,17 +1,25 @@
 import type { Metadata } from 'next'
-import { Contact } from '@/components/sections/Contact'
-import { Footer } from '@/components/sections/Footer'
+import { createMetadata } from '@/content/site'
+import { PageHero } from '@/components/sections/PageHero'
+import { ContactSection } from '@/components/sections/ContactSection'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: "Get in touch with Alex De Souza for founding engineer roles, technical co-founder conversations, and select freelance engagements.",
-}
+export const metadata: Metadata = createMetadata(
+  'Contact',
+  'Reach out to Alex De Souza for founder-grade product and engineering work.',
+  '/contact'
+)
 
 export default function ContactPage() {
   return (
     <main>
-      <Contact />
-      <Footer />
+      <PageHero
+        eyebrow="Contact"
+        title="Strong ideas deserve strong execution."
+        body="If you’re serious about building something with weight behind it, send context. I care most about sharp problems, real stakes, and teams that want quality."
+      />
+      <ContactSection />
+      <SiteFooter />
     </main>
   )
 }

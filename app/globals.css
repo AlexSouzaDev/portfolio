@@ -74,6 +74,22 @@ textarea {
   font: inherit;
 }
 
+code,
+pre,
+.font-mono {
+  font-family:
+    "SFMono-Regular",
+    "SF Mono",
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace;
+}
+
 ::selection {
   background: rgba(151, 241, 255, 0.28);
   color: white;
@@ -156,6 +172,10 @@ textarea {
   backdrop-filter: blur(24px);
 }
 
+.marquee-track {
+  animation: marquee var(--marquee-duration, 32s) linear infinite;
+}
+
 .terminal-scrollbar::-webkit-scrollbar {
   width: 7px;
 }
@@ -163,6 +183,15 @@ textarea {
 .terminal-scrollbar::-webkit-scrollbar-thumb {
   border-radius: 999px;
   background: rgba(151, 241, 255, 0.25);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-33.33%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
