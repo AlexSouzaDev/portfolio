@@ -47,7 +47,7 @@ const PROJECTS: Project[] = [
     problem:
       'Real estate agents needed a way to surface relevant prospects from unstructured data sources — no tool existed for the Brazilian market.',
     result:
-      'Standalone AI search product shipped under the Impulso brand architecture, extending the suite's total addressable market.',
+      "Standalone AI search product shipped under the Impulso brand architecture, extending the suite's total addressable market.",
     role: 'Founder, Full-Stack Engineer',
     story:
       'The second product in the ImpulsoLead ecosystem. An AI-powered search layer that turns messy data into qualified prospect lists. Ships independently — each product strengthens the brand umbrella.',
