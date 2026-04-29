@@ -3,17 +3,10 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-const NAV_COLS = [
-  ['HOME', 'WORK'],
-  ['ABOUT', 'BLOG'],
-  ['USES', 'CONTACT'],
-]
-
 const NAV_MAP: Record<string, string> = {
   HOME: '/',
   WORK: '/work',
   ABOUT: '/about',
-  BLOG: '/blog',
   USES: '/uses',
   CONTACT: '/contact',
 }
@@ -26,14 +19,11 @@ function LastCommit() {
       .then((r) => r.json())
       .then((data) => {
         const dateStr = data?.[0]?.commit?.committer?.date
-        if (!dateStr) {
-          setLabel('recently')
-          return
-        }
+        if (!dateStr) { setLabel('recently'); return }
         const diff = Date.now() - new Date(dateStr).getTime()
         const hours = Math.floor(diff / 3600000)
         const days = Math.floor(hours / 24)
-        if (hours < 1) setLabel('< 1 hour ago')
+        if (hours < 1) setLabel('< 1h ago')
         else if (hours < 24) setLabel(`${hours}h ago`)
         else setLabel(`${days}d ago`)
       })
@@ -41,9 +31,9 @@ function LastCommit() {
   }, [])
 
   return (
-    <p className="font-mono text-[12px]" style={{ color: '#888880' }}>
-      LAST COMMIT — {label}
-    </p>
+    <span className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+      last commit — {label}
+    </span>
   )
 }
 
@@ -52,80 +42,108 @@ export function Footer() {
 
   return (
     <footer
-      className="w-full px-8 py-10 grid"
-      style={{
-        borderTop: '2px solid #2A2A2A',
-        gridTemplateColumns: '1fr 1fr 1fr',
-      }}
+      className="w-full px-8 py-10"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
     >
-      {/* Left */}
-      <div className="flex flex-col gap-3">
-        <Link href="/" aria-label="Home">
-          <div
-            className="flex items-center justify-center w-[38px] h-[38px] font-display font-extrabold text-sm"
-            style={{ border: '2px solid #F0EBE0', color: '#F0EBE0' }}
-          >
-            AS
-          </div>
-        </Link>
-        <p className="font-mono text-[13px]" style={{ color: '#888880' }}>
-          Alex De Souza
-          <br />
-          Founder &amp; CTO — ImpulsoLead
-          <br />
-          alexsouza.dev
-          <br />
-          © 2024–{currentYear}
-        </p>
-      </div>
-
-      {/* Center — sitemap */}
-      <div className="flex justify-center">
-        <div
-          className="grid gap-x-12 gap-y-2"
-          style={{ gridTemplateColumns: 'auto auto' }}
-        >
-          {NAV_COLS.flat().map((label) => (
-            <Link
-              key={label}
-              href={NAV_MAP[label]}
-              className="font-mono text-[12px] uppercase tracking-wider transition-colors duration-[120ms]"
-              style={{ color: '#888880' }}
+      <div
+        className="grid"
+        style={{ gridTemplateColumns: '1fr 1fr 1fr' }}
+      >
+        {/* Left */}
+        <div className="flex flex-col gap-4">
+          <Link href="/" aria-label="Home">
+            <div
+              className="flex items-center justify-center w-[34px] h-[34px] font-display font-extrabold text-[13px] transition-all duration-150"
+              style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#F5F3EE', letterSpacing: '0.05em' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#FFE500'
+                const el = e.currentTarget
+                el.style.background = '#D6FF3F'
+                el.style.color = '#080808'
+                el.style.borderColor = '#D6FF3F'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#888880'
+                const el = e.currentTarget
+                el.style.background = 'transparent'
+                el.style.color = '#F5F3EE'
+                el.style.borderColor = 'rgba(255,255,255,0.2)'
               }}
             >
-              {label}
-            </Link>
-          ))}
+              AS
+            </div>
+          </Link>
+          <div className="font-mono text-[11px] flex flex-col gap-1" style={{ color: '#8A8A8A' }}>
+            <span style={{ color: '#F5F3EE' }}>Alex De Souza</span>
+            <span>Founder &amp; CTO — ImpulsoLead</span>
+            <span>alexsouza.dev</span>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>© 2024–{currentYear}</span>
+          </div>
+        </div>
+
+        {/* Center — sitemap */}
+        <div className="flex justify-center items-start">
+          <div className="grid gap-x-10 gap-y-2" style={{ gridTemplateColumns: 'auto auto' }}>
+            {Object.keys(NAV_MAP).map((label) => (
+              <Link
+                key={label}
+                href={NAV_MAP[label]}
+                className="font-mono text-[11px] uppercase tracking-[0.1em] transition-colors duration-150"
+                style={{ color: 'rgba(255,255,255,0.3)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#D6FF3F'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.3)'
+                }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Right */}
+        <div className="flex flex-col gap-2 items-end">
+          <p className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            BUILDING IN PORTUGAL 🇵🇹
+          </p>
+          <p className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            SHIPPING TO BRAZIL 🇧🇷
+          </p>
+          <p className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            NEXT.JS + VERCEL
+          </p>
+          <LastCommit />
         </div>
       </div>
 
-      {/* Right */}
-      <div className="flex flex-col gap-2 items-end">
-        <p className="font-mono text-[12px]" style={{ color: '#888880' }}>
-          BUILDING IN PORTUGAL 🇵🇹
+      {/* Bottom bar */}
+      <div
+        className="mt-8 pt-6 flex items-center justify-between"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+      >
+        <p className="font-mono text-[10px]" style={{ color: 'rgba(255,255,255,0.15)' }}>
+          Designed &amp; built by Alex De Souza
         </p>
-        <p className="font-mono text-[12px]" style={{ color: '#888880' }}>
-          SHIPPING TO BRAZIL 🇧🇷
-        </p>
-        <p className="font-mono text-[12px]" style={{ color: '#888880' }}>
-          POWERED BY NEXT.JS + VERCEL
-        </p>
-        <LastCommit />
+        <div
+          className="font-mono text-[10px] px-2.5 py-1"
+          style={{
+            border: '1px solid rgba(214,255,63,0.2)',
+            color: '#D6FF3F',
+            opacity: 0.6,
+          }}
+        >
+          OPEN TO SELECT PROJECTS
+        </div>
       </div>
 
       {/* Mobile override */}
       <style jsx>{`
         @media (max-width: 768px) {
-          footer {
+          .grid {
             grid-template-columns: 1fr !important;
             gap: 2rem;
           }
-          footer > div:last-child {
+          .grid > div:last-child {
             align-items: flex-start !important;
           }
         }
