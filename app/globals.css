@@ -3,12 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0D0D0D;
-  --surface: #141414;
-  --primary: #F0EBE0;
-  --secondary: #888880;
-  --accent: #FFE500;
-  --border: #2A2A2A;
+  --bg: #080808;
+  --surface: #101010;
+  --card: #151515;
+  --text: #F5F3EE;
+  --muted: #8A8A8A;
+  --accent: #D6FF3F;
+  --accent2: #7C5CFF;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-solid: #161616;
   --danger: #FF2D00;
   --success: #00C853;
 }
@@ -26,7 +29,7 @@ html {
 
 body {
   background-color: var(--bg);
-  color: var(--primary);
+  color: var(--text);
   font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,15 +38,16 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--border);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
+  border-radius: 2px;
 }
 
 /* Selection */
@@ -57,32 +61,34 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--accent);
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--accent);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
-  transition: width 150ms, height 150ms, background-color 150ms;
+  transition: width 120ms, height 120ms, background-color 120ms, border-color 120ms, opacity 120ms;
   mix-blend-mode: normal;
 }
 
 .custom-cursor.hovering {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
+  background: rgba(214, 255, 63, 0.08);
+  border-color: rgba(214, 255, 63, 0.6);
 }
 
 .custom-cursor.on-link::after {
-  content: '+';
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--accent);
-  font-size: 14px;
-  font-family: var(--font-jetbrains), monospace;
-  line-height: 1;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
 }
 
 /* Scroll progress bar */
@@ -90,7 +96,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
+  height: 1px;
   background: var(--accent);
   z-index: 9999;
   transform-origin: left;
@@ -101,28 +107,30 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.025;
+  z-index: 0;
 }
 
 /* Terminal scrollbar */
 .terminal-scroll::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 
 .terminal-scroll::-webkit-scrollbar-track {
-  background: var(--border);
+  background: transparent;
 }
 
 .terminal-scroll::-webkit-scrollbar-thumb {
   background: var(--accent);
+  border-radius: 2px;
 }
 
-/* Marquee container — hides overflow without clipping border */
+/* Marquee */
 .marquee-wrapper {
   overflow: hidden;
 }
 
-/* Hard shadow utility */
+/* Hard shadow utilities */
 .shadow-hard-accent {
   box-shadow: 4px 4px 0px var(--accent);
 }
@@ -133,13 +141,14 @@ body {
 
 /* Card hover */
 .card-hover {
-  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms;
 }
 
 .card-hover:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 3px 3px 0px var(--accent);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0px var(--accent);
 }
 
 /* Blinking cursor */
@@ -156,14 +165,14 @@ body {
 /* Pulse dot */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
+  50% { opacity: 0.5; transform: scale(0.8); }
 }
 
 .pulse-dot {
-  animation: pulse-dot 1.5s ease-in-out infinite;
+  animation: pulse-dot 1.8s ease-in-out infinite;
 }
 
-/* Nav underline slide */
+/* Nav underline */
 .nav-link {
   position: relative;
 }
@@ -174,7 +183,7 @@ body {
   bottom: -2px;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 1px;
   background: var(--accent);
   clip-path: inset(0 100% 0 0);
   transition: clip-path 200ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -187,4 +196,40 @@ body {
 
 .nav-link.active::after {
   transition: none;
+}
+
+/* Gradient text accent */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bento card base */
+.bento-card {
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: border-color 200ms, transform 200ms;
+}
+
+.bento-card:hover {
+  border-color: rgba(214, 255, 63, 0.3);
+}
+
+/* Section divider */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Fade-up animation */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

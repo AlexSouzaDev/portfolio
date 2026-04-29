@@ -6,13 +6,15 @@ import { motion } from 'framer-motion'
 interface Project {
   number: string
   name: string
+  tagline: string
   category: string
   period: string
-  description: string
+  problem: string
+  result: string
+  role: string
+  story: string
   tech: string[]
   links: { label: string; href: string; external?: boolean }[]
-  imageAlt: string
-  imageSrc?: string
   reversed?: boolean
 }
 
@@ -20,58 +22,77 @@ const PROJECTS: Project[] = [
   {
     number: '001',
     name: 'IMPULSOLEAD',
-    category: 'AI SAAS PLATFORM / REAL ESTATE / B2B',
+    tagline: 'AI that turns cold leads into closed deals.',
+    category: 'AI SAAS · REAL ESTATE · B2B',
     period: '2024 — PRESENT',
-    description:
-      'AI-powered B2B SaaS for real estate agents in Brazil. Combines AI agents, ad automation, and lead management in a single platform built on Next.js, TypeScript, and the Anthropic Claude SDK. Currently in production, serving agents managing high-volume lead pipelines.',
+    problem:
+      'Brazilian real estate agents were drowning in unqualified leads with no system to automate follow-up or qualification at scale.',
+    result:
+      'Production SaaS with AI agents handling lead qualification, ad automation, and CRM pipeline — currently live with paying customers.',
+    role: 'Founder, CTO, Lead Engineer',
+    story:
+      'Built from zero to production in months. Combines Next.js frontend, Python backend, Claude SDK for AI agent logic, and BullMQ for job orchestration. The product does what agents used to do manually — at 10× speed.',
     tech: ['Next.js', 'TypeScript', 'Anthropic SDK', 'PostgreSQL', 'Redis', 'BullMQ', 'Prisma', 'Clerk', 'tRPC'],
     links: [
       { label: 'VISIT IMPULSOLEAD.COM ↗', href: 'https://impulsolead.com', external: true },
     ],
-    imageAlt: 'ImpulsoLead dashboard screenshot',
     reversed: false,
   },
   {
     number: '002',
     name: 'IMPULSOSEARCH',
-    category: 'AI SEARCH / SAAS / PRODUCT SUITE',
+    tagline: 'Find the right lead before your competitor does.',
+    category: 'AI SEARCH · SAAS · PRODUCT SUITE',
     period: '2024 — PRESENT',
-    description:
-      'The second product in the ImpulsoLead suite. An AI-powered search layer built to surface relevant real estate leads from unstructured data sources. Ships as a standalone product under the same brand architecture.',
+    problem:
+      'Real estate agents needed a way to surface relevant prospects from unstructured data sources — no tool existed for the Brazilian market.',
+    result:
+      'Standalone AI search product shipped under the Impulso brand architecture, extending the suite's total addressable market.',
+    role: 'Founder, Full-Stack Engineer',
+    story:
+      'The second product in the ImpulsoLead ecosystem. An AI-powered search layer that turns messy data into qualified prospect lists. Ships independently — each product strengthens the brand umbrella.',
     tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Anthropic SDK'],
     links: [
       { label: 'VISIT IMPULSOSEARCH.COM ↗', href: 'https://impulsosearch.com', external: true },
     ],
-    imageAlt: 'ImpulsoSearch interface screenshot',
     reversed: true,
   },
   {
     number: '003',
     name: 'APPLEVAULT',
-    category: 'CONSUMER APP / REAL-TIME PRICING / FULL-STACK',
+    tagline: 'Instant iPhone valuations. No guesswork.',
+    category: 'CONSUMER APP · REAL-TIME PRICING · FULL-STACK',
     period: '2024',
-    description:
-      'Instant iPhone resale valuation with a personal vault. Real-time price formula based on model, capacity, condition, and battery health. Built with Next.js App Router, Clerk auth, tRPC, and Prisma.',
+    problem:
+      'iPhone resellers had no reliable tool to instantly calculate fair market value based on real device condition — just gut feeling and spreadsheets.',
+    result:
+      'Real-time valuation engine with a personal vault for tracking your inventory. Formula accounts for model, capacity, condition, and battery health.',
+    role: 'Solo Engineer, Product Designer',
+    story:
+      'Scoped, designed, and shipped in a focused sprint. Built on Next.js App Router with Clerk auth, tRPC type-safe APIs, and a Prisma-managed schema. A clean example of going from spec to production solo.',
     tech: ['Next.js', 'TypeScript', 'tRPC', 'Prisma', 'Clerk', 'Tailwind'],
     links: [
       { label: 'VIEW SOURCE ↗', href: 'https://github.com/AlexSouzaDev', external: true },
-      { label: 'CASE STUDY ↗', href: '/work#applevault' },
     ],
-    imageAlt: 'AppleVault valuation interface',
     reversed: false,
   },
   {
     number: '004',
     name: 'INVENTORY-API',
-    category: 'ENTERPRISE API / PYTHON / BACKEND SYSTEMS',
+    tagline: 'Enterprise inventory management. Zero compromises.',
+    category: 'ENTERPRISE API · PYTHON · BACKEND SYSTEMS',
     period: '2024',
-    description:
-      'Enterprise-grade inventory management API. ACID-compliant stock transfers, immutable audit log, clean Controller–Service–Repository architecture, Dockerized and documented. Demonstrates backend rigor independent of the JavaScript ecosystem.',
+    problem:
+      'Demonstrating backend rigor outside the JavaScript ecosystem — ACID compliance, audit trails, and clean architecture patterns.',
+    result:
+      'Production-grade API: ACID-compliant stock transfers, immutable audit log, clean Controller–Service–Repository layering, Dockerized and fully documented.',
+    role: 'Backend Engineer',
+    story:
+      'Built in Python/FastAPI to prove backend depth beyond the Node.js world. Every design decision was intentional: the architecture explains itself without comments, the audit log is write-once, the Docker setup works first try.',
     tech: ['Python', 'FastAPI', 'PostgreSQL', 'Docker'],
     links: [
       { label: 'VIEW SOURCE ↗', href: 'https://github.com/AlexSouzaDev', external: true },
     ],
-    imageAlt: 'Inventory API architecture diagram',
     reversed: true,
   },
 ]
@@ -79,96 +100,129 @@ const PROJECTS: Project[] = [
 function TechBadge({ label }: { label: string }) {
   return (
     <span
-      className="font-mono text-[11px] px-2 py-1 inline-block"
+      className="font-mono text-[10px] px-2 py-1 inline-block"
       style={{
-        border: '1px solid #2A2A2A',
-        color: '#888880',
-        borderRadius: '3px',
+        border: '1px solid rgba(255,255,255,0.1)',
+        color: '#8A8A8A',
+        background: 'rgba(255,255,255,0.02)',
       }}
     >
-      #{label}
+      {label}
     </span>
   )
 }
 
-function ProjectImagePlaceholder({ alt, name }: { alt: string; name: string }) {
+function ProjectImagePlaceholder({ name, number }: { name: string; number: string }) {
   return (
     <div
-      className="w-full h-full flex flex-col items-center justify-center"
-      style={{ background: '#0A0A0A' }}
-      aria-label={alt}
+      className="w-full h-full flex flex-col items-end justify-end p-8"
+      style={{ background: '#0D0D0D' }}
+      aria-label={`${name} — project visual`}
     >
       <div
-        className="font-display font-extrabold text-4xl mb-4 select-none"
-        style={{ color: '#FFE500', opacity: 0.15 }}
+        className="font-display font-extrabold select-none"
+        style={{
+          fontSize: 'clamp(48px, 6vw, 96px)',
+          color: 'rgba(214,255,63,0.07)',
+          lineHeight: 1,
+        }}
       >
-        {name}
+        {number}
       </div>
       <div
-        className="font-mono text-[11px] uppercase tracking-widest"
-        style={{ color: '#2A2A2A' }}
+        className="font-mono text-[10px] uppercase tracking-[0.16em] mt-2"
+        style={{ color: 'rgba(255,255,255,0.08)' }}
       >
-        SCREENSHOT COMING SOON
+        {name}
       </div>
     </div>
   )
 }
 
-function ProjectCard({ project }: { project: Project }) {
-  const imageColumn = (
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const details = (
     <div
-      className="relative aspect-video md:aspect-auto"
-      style={{ minHeight: '280px' }}
-    >
-      <ProjectImagePlaceholder alt={project.imageAlt} name={project.name} />
-    </div>
-  )
-
-  const detailsColumn = (
-    <div
-      className="flex flex-col justify-center gap-4 p-10"
+      className="flex flex-col justify-between gap-6 p-10"
       style={{
-        borderLeft: project.reversed ? 'none' : '2px solid #2A2A2A',
-        borderRight: project.reversed ? '2px solid #2A2A2A' : 'none',
+        borderLeft: project.reversed ? 'none' : '1px solid rgba(255,255,255,0.06)',
+        borderRight: project.reversed ? '1px solid rgba(255,255,255,0.06)' : 'none',
       }}
     >
-      <p className="font-mono text-[11px]" style={{ color: '#888880' }}>
-        {project.number}
-      </p>
-      <h3
-        className="font-display font-extrabold leading-tight"
-        style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#F0EBE0' }}
-      >
-        {project.name}
-      </h3>
-      <p className="font-mono text-[11px] uppercase" style={{ color: '#888880' }}>
-        {project.category}
-      </p>
-      <p className="font-mono text-[11px]" style={{ color: '#888880' }}>
-        {project.period}
-      </p>
-      <p className="font-mono text-[13px] leading-relaxed" style={{ color: '#888880' }}>
-        {project.description}
-      </p>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <p className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            {project.number}
+          </p>
+          <p className="font-mono text-[10px] uppercase tracking-wider" style={{ color: '#8A8A8A' }}>
+            {project.period}
+          </p>
+        </div>
+
+        <h3
+          className="font-display font-extrabold leading-tight"
+          style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', color: '#F5F3EE' }}
+        >
+          {project.name}
+        </h3>
+
+        <p
+          className="font-mono text-[13px]"
+          style={{ color: '#D6FF3F', opacity: 0.85 }}
+        >
+          {project.tagline}
+        </p>
+
+        <p
+          className="font-mono text-[10px] uppercase tracking-wider"
+          style={{ color: 'rgba(255,255,255,0.2)' }}
+        >
+          {project.category}
+        </p>
+      </div>
+
+      {/* Problem / Result / Role */}
+      <div className="flex flex-col gap-4">
+        {[
+          { label: 'PROBLEM', text: project.problem },
+          { label: 'RESULT', text: project.result },
+          { label: 'ROLE', text: project.role },
+        ].map(({ label, text }) => (
+          <div key={label} className="flex flex-col gap-1">
+            <span
+              className="font-mono text-[9px] uppercase tracking-[0.14em]"
+              style={{ color: '#D6FF3F', opacity: 0.6 }}
+            >
+              {label}
+            </span>
+            <p className="font-mono text-[12px] leading-[1.65]" style={{ color: '#8A8A8A' }}>
+              {text}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Tech */}
+      <div className="flex flex-wrap gap-1.5">
         {project.tech.map((t) => (
           <TechBadge key={t} label={t} />
         ))}
       </div>
-      <div className="flex flex-wrap gap-4 mt-2">
+
+      {/* Links */}
+      <div className="flex flex-wrap gap-5">
         {project.links.map(({ label, href, external }) => (
           <a
             key={label}
             href={href}
             target={external ? '_blank' : undefined}
             rel={external ? 'noopener noreferrer' : undefined}
-            className="font-mono text-[12px] uppercase tracking-wider transition-colors duration-[120ms]"
-            style={{ color: '#FFE500' }}
+            className="font-mono text-[11px] uppercase tracking-wider transition-all duration-150"
+            style={{ color: '#D6FF3F' }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.textDecoration = 'underline'
+              e.currentTarget.style.opacity = '0.7'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.textDecoration = 'none'
+              e.currentTarget.style.opacity = '1'
             }}
           >
             {label}
@@ -178,84 +232,117 @@ function ProjectCard({ project }: { project: Project }) {
     </div>
   )
 
+  const visual = (
+    <div
+      className="relative"
+      style={{ minHeight: '300px' }}
+    >
+      <ProjectImagePlaceholder name={project.name} number={project.number} />
+    </div>
+  )
+
   return (
-    <motion.div
+    <motion.article
       className="card-hover grid"
       style={{
-        gridTemplateColumns: '58% 42%',
-        border: '2px solid #2A2A2A',
-        minHeight: '340px',
+        gridTemplateColumns: '50% 50%',
+        border: '1px solid rgba(255,255,255,0.06)',
+        background: '#0D0D0D',
+        minHeight: '360px',
       }}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      transition={{
+        duration: 0.4,
+        delay: index * 0.05,
+        ease: [0.16, 1, 0.3, 1],
+      }}
     >
       {project.reversed ? (
         <>
-          {detailsColumn}
-          {imageColumn}
+          {details}
+          {visual}
         </>
       ) : (
         <>
-          {imageColumn}
-          {detailsColumn}
+          {visual}
+          {details}
         </>
       )}
-    </motion.div>
+    </motion.article>
   )
 }
 
 export function SelectedWork() {
   return (
     <section className="w-full px-8 py-24">
-      {/* Section header */}
+      {/* Header */}
       <div
-        className="flex items-baseline justify-between mb-12 pb-4"
-        style={{ borderBottom: '2px solid #2A2A2A' }}
+        className="flex items-baseline justify-between mb-12 pb-5"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
       >
-        <h2
-          className="font-display font-extrabold"
-          style={{ fontSize: 'clamp(32px, 5vw, 48px)', color: '#F0EBE0' }}
-        >
-          SELECTED WORK
-        </h2>
-        <span className="font-mono text-[11px]" style={{ color: '#888880' }}>
-          [01]
+        <div className="flex items-baseline gap-6">
+          <h2
+            className="font-display font-extrabold"
+            style={{ fontSize: 'clamp(32px, 5vw, 52px)', color: '#F5F3EE' }}
+          >
+            FEATURED WORK
+          </h2>
+          <span className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            [01]
+          </span>
+        </div>
+        <span className="font-mono text-[11px] hidden md:block" style={{ color: '#8A8A8A' }}>
+          SELECTED CASE STUDIES
         </span>
       </div>
 
       {/* Projects */}
-      <div className="flex flex-col gap-0">
-        {PROJECTS.map((project) => (
-          <ProjectCard key={project.number} project={project} />
+      <div className="flex flex-col" style={{ gap: '1px', background: 'rgba(255,255,255,0.04)' }}>
+        {PROJECTS.map((project, i) => (
+          <ProjectCard key={project.number} project={project} index={i} />
         ))}
       </div>
 
-      {/* View all link */}
+      {/* View all */}
       <Link
         href="/work"
-        className="mt-8 flex items-center justify-center w-full py-6 font-display font-extrabold transition-all duration-[120ms]"
+        className="mt-6 flex items-center justify-center w-full py-5 font-display font-extrabold transition-all duration-150"
         style={{
-          fontSize: 'clamp(18px, 2.5vw, 24px)',
-          border: '2px solid #F0EBE0',
-          color: '#F0EBE0',
+          fontSize: 'clamp(16px, 2.2vw, 22px)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          color: '#F5F3EE',
+          background: 'transparent',
+          letterSpacing: '0.04em',
         }}
         onMouseEnter={(e) => {
           const el = e.currentTarget
-          el.style.background = '#FFE500'
-          el.style.color = '#0D0D0D'
-          el.style.borderColor = '#FFE500'
+          el.style.background = '#D6FF3F'
+          el.style.color = '#080808'
+          el.style.borderColor = '#D6FF3F'
         }}
         onMouseLeave={(e) => {
           const el = e.currentTarget
           el.style.background = 'transparent'
-          el.style.color = '#F0EBE0'
-          el.style.borderColor = '#F0EBE0'
+          el.style.color = '#F5F3EE'
+          el.style.borderColor = 'rgba(255,255,255,0.1)'
         }}
       >
         VIEW ALL PROJECTS (11+) →
       </Link>
+
+      {/* Mobile override */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          article {
+            grid-template-columns: 1fr !important;
+          }
+          article > div:first-child {
+            min-height: 200px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

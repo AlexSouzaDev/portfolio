@@ -4,10 +4,26 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const CHANNELS = [
-  { label: 'EMAIL ↗', href: 'mailto:alexandre@impulsolead.com', display: 'alexandre@impulsolead.com' },
-  { label: 'LINKEDIN ↗', href: 'https://linkedin.com/in/alexandre-de-souza', display: 'in/alexandre-de-souza' },
-  { label: 'GITHUB ↗', href: 'https://github.com/AlexSouzaDev', display: 'github.com/AlexSouzaDev' },
-  { label: 'IMPULSOLEAD ↗', href: 'https://impulsolead.com', display: 'impulsolead.com' },
+  {
+    label: 'EMAIL',
+    href: 'mailto:alexandre@impulsolead.com',
+    display: 'alexandre@impulsolead.com',
+  },
+  {
+    label: 'LINKEDIN',
+    href: 'https://linkedin.com/in/alexandre-de-souza',
+    display: 'in/alexandre-de-souza',
+  },
+  {
+    label: 'GITHUB',
+    href: 'https://github.com/AlexSouzaDev',
+    display: 'github.com/AlexSouzaDev',
+  },
+  {
+    label: 'IMPULSOLEAD',
+    href: 'https://impulsolead.com',
+    display: 'impulsolead.com',
+  },
 ]
 
 function LiveClock() {
@@ -15,8 +31,7 @@ function LiveClock() {
 
   useEffect(() => {
     const update = () => {
-      const now = new Date()
-      const formatted = now.toLocaleTimeString('en-GB', {
+      const formatted = new Date().toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',
         timeZone: 'Europe/Lisbon',
@@ -24,14 +39,21 @@ function LiveClock() {
       setTime(formatted)
     }
     update()
-    const interval = setInterval(update, 60000)
+    const interval = setInterval(update, 30000)
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <p className="font-mono text-[11px] mt-6" style={{ color: '#888880' }}>
-      Currently {time} WET (Portugal) — I&apos;m probably coding.
-    </p>
+    <div
+      className="flex items-center gap-2 mt-6 font-mono text-[11px]"
+      style={{ color: '#8A8A8A' }}
+    >
+      <span
+        className="inline-block w-1.5 h-1.5 rounded-full pulse-dot flex-shrink-0"
+        style={{ background: '#00C853' }}
+      />
+      {time} WET · Portugal — probably coding
+    </div>
   )
 }
 
@@ -43,14 +65,12 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('sending')
-
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-
       if (res.ok) {
         setStatus('sent')
         setForm({ name: '', email: '', message: '' })
@@ -62,57 +82,66 @@ export function Contact() {
     }
   }
 
-  const fieldStyle = {
-    background: '#0D0D0D',
-    border: '2px solid #2A2A2A',
-    color: '#F0EBE0',
+  const fieldStyle: React.CSSProperties = {
+    background: 'rgba(255,255,255,0.02)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    color: '#F5F3EE',
     fontFamily: 'var(--font-jetbrains), monospace',
-    fontSize: '14px',
-    padding: '12px',
+    fontSize: '13px',
+    padding: '12px 14px',
     outline: 'none',
     width: '100%',
+    transition: 'border-color 150ms',
   }
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.currentTarget.style.borderColor = '#FFE500'
+    e.currentTarget.style.borderColor = 'rgba(214,255,63,0.5)'
   }
   const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.currentTarget.style.borderColor = '#2A2A2A'
+    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
   }
 
   return (
-    <section className="w-full px-8 py-24" style={{ borderTop: '2px solid #2A2A2A' }}>
-      {/* Section header */}
-      <div className="mb-10">
-        <h2
-          className="font-display font-extrabold"
-          style={{ fontSize: 'clamp(48px, 7vw, 64px)', color: '#F0EBE0' }}
-        >
-          LET&apos;S BUILD.
-        </h2>
-        <div
-          className="flex items-baseline justify-between pb-4 mt-2"
-          style={{ borderBottom: '2px solid #2A2A2A' }}
-        >
-          <p
-            className="font-mono text-[15px] leading-relaxed"
-            style={{ color: '#888880', maxWidth: '600px' }}
-          >
-            Available for founding engineer roles, technical co-founder conversations,
-            and select freelance engagements.
-            <br />
-            <br />
-            Not interested in: spec work, unpaid trials, or &ldquo;exposure.&rdquo;
-          </p>
-          <span className="font-mono text-[11px]" style={{ color: '#888880' }}>
-            [05]
-          </span>
+    <section
+      className="w-full"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+    >
+      {/* Big CTA headline */}
+      <div
+        className="px-8 pt-20 pb-12"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+      >
+        <div className="flex items-end justify-between gap-8 flex-wrap">
+          <div>
+            <p
+              className="font-mono text-[11px] uppercase tracking-[0.14em] mb-5"
+              style={{ color: '#D6FF3F', opacity: 0.7 }}
+            >
+              CONTACT [05]
+            </p>
+            <h2
+              className="font-display font-extrabold leading-[0.92]"
+              style={{ fontSize: 'clamp(42px, 7vw, 88px)', color: '#F5F3EE' }}
+            >
+              NEED SOMEONE
+              <br />
+              WHO ACTUALLY
+              <br />
+              <span style={{ color: '#D6FF3F' }}>SHIPS?</span>
+            </h2>
+          </div>
+          <div className="flex flex-col gap-2 font-mono text-[12px]" style={{ color: '#8A8A8A', maxWidth: '280px' }}>
+            <p>Available for founding engineer roles, technical co-founder conversations, and select freelance engagements.</p>
+            <p className="mt-2" style={{ color: 'rgba(255,255,255,0.2)' }}>
+              Not interested in: spec work, unpaid trials, or &ldquo;exposure.&rdquo;
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Two-column layout */}
+      {/* Two-column form */}
       <div
-        className="grid"
+        className="grid px-8 py-16"
         style={{ gridTemplateColumns: '1fr 1fr', gap: '0' }}
       >
         {/* Left — form */}
@@ -121,9 +150,9 @@ export function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <input
               type="text"
               placeholder="NAME"
@@ -133,7 +162,7 @@ export function Contact() {
               onBlur={onBlur}
               required
               aria-label="Your name"
-              style={fieldStyle}
+              style={{ ...fieldStyle, textTransform: 'uppercase', letterSpacing: '0.06em' }}
             />
             <input
               type="email"
@@ -148,7 +177,7 @@ export function Contact() {
             />
             <div className="relative">
               <textarea
-                placeholder="MESSAGE"
+                placeholder="MESSAGE — what are you building?"
                 value={form.message}
                 onChange={(e) => {
                   const val = e.target.value.slice(0, 500)
@@ -164,8 +193,8 @@ export function Contact() {
                 style={{ ...fieldStyle, resize: 'none' }}
               />
               <span
-                className="absolute bottom-2 right-3 font-mono text-[11px]"
-                style={{ color: '#888880' }}
+                className="absolute bottom-3 right-3 font-mono text-[10px]"
+                style={{ color: 'rgba(255,255,255,0.2)' }}
               >
                 {charCount}/500
               </span>
@@ -174,34 +203,35 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === 'sending' || status === 'sent'}
-              className="w-full font-mono text-[13px] uppercase tracking-wider py-4 transition-all duration-[120ms]"
+              className="w-full font-mono text-[12px] uppercase tracking-[0.1em] py-4 font-semibold transition-all duration-150"
               style={{
-                background: status === 'sent' ? '#0D0D0D' : '#FFE500',
-                color: status === 'sent' ? '#FFE500' : '#0D0D0D',
-                border: '2px solid #FFE500',
+                background: status === 'sent' ? 'transparent' : '#D6FF3F',
+                color: status === 'sent' ? '#D6FF3F' : '#080808',
+                border: '1px solid #D6FF3F',
+                cursor: status === 'sent' ? 'default' : 'pointer',
               }}
               onMouseEnter={(e) => {
-                if (status !== 'sent') {
-                  e.currentTarget.style.background = '#0D0D0D'
-                  e.currentTarget.style.color = '#FFE500'
+                if (status !== 'sent' && status !== 'sending') {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = '#D6FF3F'
                 }
               }}
               onMouseLeave={(e) => {
-                if (status !== 'sent') {
-                  e.currentTarget.style.background = '#FFE500'
-                  e.currentTarget.style.color = '#0D0D0D'
+                if (status !== 'sent' && status !== 'sending') {
+                  e.currentTarget.style.background = '#D6FF3F'
+                  e.currentTarget.style.color = '#080808'
                 }
               }}
             >
               {status === 'sent'
-                ? '✓ SENT — I\'LL RESPOND WITHIN 48H'
+                ? '✓ SENT — RESPONSE WITHIN 48H'
                 : status === 'sending'
                 ? 'SENDING...'
                 : 'SEND MESSAGE →'}
             </button>
 
             {status === 'error' && (
-              <p className="font-mono text-[12px]" style={{ color: '#FF2D00' }}>
+              <p className="font-mono text-[11px]" style={{ color: '#FF2D00' }}>
                 Something went wrong. Email me directly.
               </p>
             )}
@@ -211,44 +241,51 @@ export function Contact() {
         {/* Right — channels */}
         <motion.div
           className="pl-12 flex flex-col"
-          style={{ borderLeft: '2px solid #2A2A2A' }}
+          style={{ borderLeft: '1px solid rgba(255,255,255,0.06)' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.3, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col" style={{ gap: '1px', background: 'rgba(255,255,255,0.04)' }}>
             {CHANNELS.map(({ label, href, display }) => (
               <a
                 key={label}
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="flex items-center justify-between px-5 py-4 font-mono transition-all duration-[120ms]"
-                style={{ border: '2px solid #2A2A2A', marginTop: '-2px' }}
+                className="flex items-center justify-between px-5 py-4 font-mono transition-all duration-150 group"
+                style={{ background: '#080808' }}
                 onMouseEnter={(e) => {
-                  const el = e.currentTarget
-                  el.style.borderColor = '#FFE500'
-                  el.style.transform = 'translate(-2px, -2px)'
-                  el.style.boxShadow = '2px 2px 0px #FFE500'
-                  el.style.zIndex = '1'
-                  el.style.position = 'relative'
+                  e.currentTarget.style.background = 'rgba(214,255,63,0.05)'
                 }}
                 onMouseLeave={(e) => {
-                  const el = e.currentTarget
-                  el.style.borderColor = '#2A2A2A'
-                  el.style.transform = ''
-                  el.style.boxShadow = 'none'
+                  e.currentTarget.style.background = '#080808'
                 }}
               >
-                <span className="text-[12px] uppercase tracking-wider" style={{ color: '#F0EBE0' }}>
-                  {label}
+                <span
+                  className="text-[11px] uppercase tracking-[0.1em] transition-colors duration-150"
+                  style={{ color: '#F5F3EE' }}
+                >
+                  {label} ↗
                 </span>
-                <span className="text-[12px]" style={{ color: '#888880' }}>
+                <span className="text-[11px]" style={{ color: '#8A8A8A' }}>
                   {display}
                 </span>
               </a>
             ))}
+          </div>
+
+          {/* Meta */}
+          <div className="mt-8 flex flex-col gap-3">
+            <div className="flex items-center gap-3 font-mono text-[11px]" style={{ color: '#8A8A8A' }}>
+              <span>RESPONSE TIME</span>
+              <span style={{ color: '#D6FF3F' }}>Within 48 hours</span>
+            </div>
+            <div className="flex items-center gap-3 font-mono text-[11px]" style={{ color: '#8A8A8A' }}>
+              <span>AVAILABILITY</span>
+              <span style={{ color: '#F5F3EE' }}>Reviewing select projects</span>
+            </div>
           </div>
 
           <LiveClock />
@@ -267,7 +304,7 @@ export function Contact() {
           }
           .grid > div:last-child {
             border-left: none !important;
-            border-top: 2px solid #2A2A2A !important;
+            border-top: 1px solid rgba(255,255,255,0.06) !important;
             padding-left: 0 !important;
             padding-top: 2rem !important;
           }

@@ -5,28 +5,34 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const WORDS = ['BUILDS.', 'SHIPS.', 'ARCHITECTS.', 'SOLVES.']
+const PHRASES = ['PRODUCTS.', 'SYSTEMS.', 'REVENUE.', 'LEVERAGE.']
+
+const BADGES = [
+  'Portugal / Europe',
+  'Available Worldwide',
+  'Building Since 2020',
+  'Open for Select Projects',
+]
 
 export function Hero() {
-  const [wordIndex, setWordIndex] = useState(0)
+  const [idx, setIdx] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((i) => (i + 1) % WORDS.length)
-    }, 2200)
-    return () => clearInterval(interval)
+    const t = setInterval(() => setIdx((i) => (i + 1) % PHRASES.length), 2600)
+    return () => clearInterval(t)
   }, [])
 
   return (
     <section
-      className="relative w-full min-h-screen grid"
+      className="relative w-full min-h-screen"
       style={{
+        display: 'grid',
         gridTemplateColumns: '58% 42%',
       }}
     >
-      {/* Noise texture SVG */}
+      {/* Noise texture */}
       <svg className="noise-overlay" aria-hidden="true">
-        <filter id="noise">
+        <filter id="hero-noise">
           <feTurbulence
             type="fractalNoise"
             baseFrequency="0.65"
@@ -35,124 +41,168 @@ export function Hero() {
           />
           <feColorMatrix type="saturate" values="0" />
         </filter>
-        <rect width="100%" height="100%" filter="url(#noise)" />
+        <rect width="100%" height="100%" filter="url(#hero-noise)" />
       </svg>
 
       {/* Vertical divider */}
       <div
-        className="absolute top-0 bottom-0"
+        className="absolute top-0 bottom-0 hidden md:block"
         style={{
           left: '58%',
-          width: '2px',
-          background: '#2A2A2A',
+          width: '1px',
+          background: 'rgba(255,255,255,0.05)',
         }}
         aria-hidden="true"
       />
 
       {/* Left column */}
       <motion.div
-        className="flex flex-col justify-center px-12 py-20 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        className="flex flex-col justify-center px-12 py-24 relative z-10"
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Label */}
+        {/* Status label */}
         <p
-          className="font-mono text-[11px] uppercase tracking-[0.12em] mb-8 flex items-center gap-1"
-          style={{ color: '#888880' }}
+          className="font-mono text-[11px] uppercase tracking-[0.14em] mb-10 flex items-center gap-2.5"
+          style={{ color: '#8A8A8A' }}
         >
-          FOUNDER &amp; CTO — IMPULSOLEAD / ALEXSOUZA.DEV
-          <span className="cursor-blink">|</span>
+          <span
+            className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 pulse-dot"
+            style={{ background: '#D6FF3F' }}
+          />
+          FOUNDER &amp; CTO — IMPULSOLEAD
+          <span className="cursor-blink ml-0.5">|</span>
         </p>
 
         {/* Main headline */}
         <div
-          className="font-display font-extrabold leading-[0.92] select-none"
+          className="font-display font-extrabold select-none"
           style={{
-            fontSize: 'clamp(64px, 9vw, 112px)',
-            color: '#F0EBE0',
+            fontSize: 'clamp(64px, 10vw, 148px)',
+            lineHeight: 0.9,
+            color: '#F5F3EE',
           }}
         >
-          <div>ALEX</div>
-          <div className="relative h-[1.1em] overflow-hidden">
+          <div>I BUILD</div>
+          <div
+            className="relative overflow-hidden"
+            style={{ height: '1.06em' }}
+          >
             <AnimatePresence mode="wait">
               <motion.span
-                key={wordIndex}
+                key={idx}
                 className="absolute inset-0 block"
-                style={{ color: '#FFE500' }}
-                initial={{ y: 40, opacity: 0 }}
+                style={{ color: '#D6FF3F' }}
+                initial={{ y: '110%', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -40, opacity: 0 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                exit={{ y: '-110%', opacity: 0 }}
+                transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
               >
-                {WORDS[wordIndex]}
+                {PHRASES[idx]}
               </motion.span>
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Pitch */}
+        {/* Sub */}
         <p
-          className="font-mono text-[16px] leading-relaxed mt-7"
-          style={{ color: '#888880', maxWidth: '480px' }}
+          className="font-mono text-[15px] leading-[1.85] mt-9"
+          style={{ color: '#8A8A8A', maxWidth: '460px' }}
         >
-          Founder &amp; CTO building AI-powered SaaS in Portugal.
+          Building AI-powered SaaS from Portugal.
           <br />
-          Currently shipping ImpulsoLead for the 🇧🇷 real estate market.
+          Currently shipping ImpulsoLead for the{' '}
+          <span style={{ color: '#F5F3EE' }}>🇧🇷 real estate market.</span>
         </p>
 
-        {/* CTAs */}
-        <div className="flex items-center gap-4 mt-10">
+        {/* CTA row */}
+        <div className="flex flex-wrap items-center gap-3 mt-10">
           <Link
             href="/work"
-            className="font-mono text-[13px] uppercase tracking-wider px-6 py-3 transition-all duration-[120ms]"
-            style={{
-              background: '#FFE500',
-              color: '#0D0D0D',
-              border: '2px solid #FFE500',
-            }}
+            className="font-mono text-[12px] uppercase tracking-[0.1em] px-5 py-3 font-semibold transition-all duration-150"
+            style={{ background: '#D6FF3F', color: '#080808' }}
             onMouseEnter={(e) => {
               const el = e.currentTarget
-              el.style.background = '#0D0D0D'
-              el.style.color = '#FFE500'
-              el.style.boxShadow = '4px 4px 0px #FFE500'
+              el.style.background = '#bfed30'
+              el.style.transform = 'translate(-2px, -2px)'
+              el.style.boxShadow = '2px 2px 0 rgba(0,0,0,0.3)'
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget
-              el.style.background = '#FFE500'
-              el.style.color = '#0D0D0D'
+              el.style.background = '#D6FF3F'
+              el.style.transform = ''
               el.style.boxShadow = 'none'
             }}
           >
-            SEE MY WORK →
+            VIEW WORK →
           </Link>
+
           <Link
             href="/contact"
-            className="font-mono text-[13px] uppercase tracking-wider px-6 py-3 transition-all duration-[120ms]"
+            className="font-mono text-[12px] uppercase tracking-[0.1em] px-5 py-3 transition-all duration-150"
             style={{
               background: 'transparent',
-              color: '#F0EBE0',
-              border: '2px solid #F0EBE0',
+              color: '#F5F3EE',
+              border: '1px solid rgba(255,255,255,0.15)',
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget
-              el.style.background = '#F0EBE0'
-              el.style.color = '#0D0D0D'
+              el.style.borderColor = 'rgba(255,255,255,0.35)'
+              el.style.background = 'rgba(255,255,255,0.04)'
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget
+              el.style.borderColor = 'rgba(255,255,255,0.15)'
+              el.style.background = 'transparent'
+            }}
+          >
+            BOOK A CALL
+          </Link>
+
+          <a
+            href="#ai"
+            className="font-mono text-[12px] uppercase tracking-[0.1em] px-5 py-3 transition-all duration-150"
+            style={{
+              background: 'transparent',
+              color: '#D6FF3F',
+              border: '1px solid rgba(214,255,63,0.25)',
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget
+              el.style.background = 'rgba(214,255,63,0.07)'
+              el.style.borderColor = 'rgba(214,255,63,0.55)'
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget
               el.style.background = 'transparent'
-              el.style.color = '#F0EBE0'
+              el.style.borderColor = 'rgba(214,255,63,0.25)'
             }}
           >
-            GET IN TOUCH
-          </Link>
+            ASK MY AI ↗
+          </a>
         </div>
 
-        {/* Data pills */}
-        <div className="flex flex-wrap gap-3 mt-8">
+        {/* Meta badges */}
+        <div className="flex flex-wrap gap-2 mt-8">
+          {BADGES.map((badge) => (
+            <span
+              key={badge}
+              className="font-mono text-[10px] uppercase tracking-[0.1em] px-3 py-1.5"
+              style={{
+                border: '1px solid rgba(255,255,255,0.08)',
+                color: '#8A8A8A',
+                background: 'rgba(255,255,255,0.015)',
+              }}
+            >
+              {badge}
+            </span>
+          ))}
+        </div>
+
+        {/* Live products strip */}
+        <div className="flex flex-wrap gap-3 mt-6">
           {[
-            { label: '↗ 2 LIVE SAAS PRODUCTS', href: '/work' },
             { label: '↗ IMPULSOLEAD.COM', href: 'https://impulsolead.com' },
             { label: '↗ IMPULSOSEARCH.COM', href: 'https://impulsosearch.com' },
             { label: '↗ GITHUB', href: 'https://github.com/AlexSouzaDev' },
@@ -160,20 +210,15 @@ export function Hero() {
             <a
               key={label}
               href={href}
-              target={href.startsWith('http') ? '_blank' : undefined}
-              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="font-mono text-[12px] px-3 py-1.5 transition-colors duration-[120ms]"
-              style={{
-                border: '1px solid #2A2A2A',
-                color: '#888880',
-              }}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[11px] transition-colors duration-150"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#FFE500'
-                e.currentTarget.style.color = '#FFE500'
+                e.currentTarget.style.color = '#D6FF3F'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#2A2A2A'
-                e.currentTarget.style.color = '#888880'
+                e.currentTarget.style.color = 'rgba(255,255,255,0.25)'
               }}
             >
               {label}
@@ -183,58 +228,91 @@ export function Hero() {
       </motion.div>
 
       {/* Right column — photo */}
-      <div className="flex items-center justify-center px-12 py-20 relative z-10">
+      <div className="flex items-center justify-center px-12 py-24 relative z-10">
         <motion.div
           className="relative"
-          initial={{ rotate: -8, y: 30, opacity: 0 }}
-          animate={{ rotate: -2, y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.96, y: 18 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
         >
+          {/* Glow behind frame */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(214,255,63,0.08) 0%, transparent 70%)',
+              transform: 'scale(1.3)',
+            }}
+          />
+
           {/* Photo frame */}
           <div
             className="relative overflow-hidden group"
             style={{
-              border: '3px solid #2A2A2A',
-              transform: 'rotate(-2deg)',
-              width: 'min(360px, 80%)',
+              width: 'min(320px, 82%)',
               aspectRatio: '3/4',
+              border: '1px solid rgba(255,255,255,0.1)',
             }}
           >
             <Image
               src="/photo.jpg"
               alt="Alex De Souza — Founder & CTO"
               fill
-              className="object-cover transition-all duration-300"
-              style={{ filter: 'grayscale(100%) contrast(1.05)' }}
+              className="object-cover transition-all duration-500 ease-out"
+              style={{ filter: 'grayscale(100%) contrast(1.1)' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.filter = 'none'
+                e.currentTarget.style.filter = 'grayscale(0%) contrast(1)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.filter = 'grayscale(100%) contrast(1.05)'
+                e.currentTarget.style.filter = 'grayscale(100%) contrast(1.1)'
               }}
-              sizes="360px"
+              sizes="320px"
               priority
             />
+
+            {/* Accent gradient overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'linear-gradient(to top, rgba(214,255,63,0.2) 0%, transparent 50%)',
+              }}
+            />
+
+            {/* Side label — rotated */}
+            <div
+              className="absolute font-mono text-[9px] uppercase tracking-[0.18em]"
+              style={{
+                bottom: '50%',
+                left: '-40px',
+                transform: 'rotate(-90deg) translateX(50%)',
+                color: 'rgba(255,255,255,0.15)',
+                whiteSpace: 'nowrap',
+                transformOrigin: 'left center',
+              }}
+            >
+              ALEXSOUZA.DEV
+            </div>
           </div>
 
           {/* Floating badge */}
-          <div
-            className="absolute font-mono text-[11px] uppercase tracking-widest px-3 py-1.5"
+          <motion.div
+            className="absolute font-mono text-[10px] uppercase px-3 py-1.5 font-bold tracking-[0.12em]"
             style={{
-              bottom: '-12px',
-              right: '-12px',
-              background: '#FFE500',
-              color: '#0D0D0D',
-              border: '2px solid #0D0D0D',
-              transform: 'rotate(2deg)',
+              bottom: '-16px',
+              right: '-16px',
+              background: '#D6FF3F',
+              color: '#080808',
             }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1, rotate: 2 }}
+            transition={{ delay: 0.85, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            CTO @ 2024
-          </div>
+            FOUNDER // 2024–
+          </motion.div>
         </motion.div>
       </div>
 
-      {/* Mobile layout override */}
+      {/* Mobile override */}
       <style jsx>{`
         @media (max-width: 768px) {
           section {
@@ -242,7 +320,7 @@ export function Hero() {
             min-height: auto !important;
           }
           section > div:nth-child(3) {
-            padding: 60px 24px 40px !important;
+            padding: 80px 24px 40px !important;
           }
           section > div:nth-child(4) {
             padding: 20px 24px 60px !important;
