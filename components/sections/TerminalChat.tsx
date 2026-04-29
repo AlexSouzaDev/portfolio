@@ -31,7 +31,6 @@ export function TerminalChat() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Staggered reveal of initial lines
   useEffect(() => {
     let i = 0
     const interval = setInterval(() => {
@@ -41,7 +40,7 @@ export function TerminalChat() {
       } else {
         clearInterval(interval)
       }
-    }, 80)
+    }, 75)
     return () => clearInterval(interval)
   }, [])
 
@@ -58,8 +57,7 @@ export function TerminalChat() {
   const sendMessage = async (msg: string) => {
     if (!msg.trim() || loading) return
 
-    const userLine: Line = { type: 'prompt', text: `$ ${msg}` }
-    setLines((prev) => [...prev, userLine])
+    setLines((prev) => [...prev, { type: 'prompt', text: `$ ${msg}` }])
     setInput('')
     setLoading(true)
 
@@ -82,7 +80,7 @@ export function TerminalChat() {
     } catch {
       setLines((prev) => [
         ...prev,
-        { type: 'response', text: '  [error] Could not reach the server. Try again.' },
+        { type: 'response', text: '  [error] Could not reach server. Try again.' },
       ])
     } finally {
       setLoading(false)
@@ -90,20 +88,29 @@ export function TerminalChat() {
   }
 
   return (
-    <section className="w-full px-8 py-24" style={{ borderTop: '2px solid #2A2A2A' }}>
-      {/* Section header */}
+    <section
+      id="ai"
+      className="w-full px-8 py-24"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+    >
+      {/* Header */}
       <div
-        className="flex items-baseline justify-between mb-10 pb-4"
-        style={{ borderBottom: '2px solid #2A2A2A' }}
+        className="flex items-baseline justify-between mb-10 pb-5"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
       >
-        <h2
-          className="font-display font-extrabold"
-          style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#F0EBE0' }}
-        >
-          ASK ME ANYTHING
-        </h2>
-        <span className="font-mono text-[11px]" style={{ color: '#888880' }}>
-          [AI]
+        <div className="flex items-baseline gap-6">
+          <h2
+            className="font-display font-extrabold"
+            style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#F5F3EE' }}
+          >
+            ASK ME ANYTHING
+          </h2>
+          <span className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            [AI]
+          </span>
+        </div>
+        <span className="font-mono text-[11px] hidden md:block" style={{ color: '#8A8A8A' }}>
+          POWERED BY CLAUDE
         </span>
       </div>
 
@@ -111,50 +118,43 @@ export function TerminalChat() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Terminal panel */}
         <div
           className="w-full max-w-3xl mx-auto"
-          style={{ border: '3px solid #2A2A2A' }}
+          style={{ border: '1px solid rgba(255,255,255,0.1)' }}
           onClick={() => inputRef.current?.focus()}
         >
           {/* Title bar */}
           <div
-            className="flex items-center px-4 py-2 gap-3"
+            className="flex items-center px-4 py-2.5 gap-3"
             style={{
-              background: '#141414',
-              borderBottom: '3px solid #FFE500',
+              background: '#101010',
+              borderBottom: '1px solid rgba(214,255,63,0.3)',
             }}
           >
-            <div className="flex gap-2">
-              <span className="block w-3 h-3" style={{ background: '#FFE500' }} />
-              <span className="block w-3 h-3" style={{ background: '#888880' }} />
-              <span className="block w-3 h-3" style={{ background: '#2A2A2A' }} />
+            <div className="flex gap-1.5">
+              <span className="block w-2.5 h-2.5 rounded-full" style={{ background: '#D6FF3F' }} />
+              <span className="block w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
+              <span className="block w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }} />
             </div>
-            <span
-              className="font-mono text-[11px] mx-auto"
-              style={{ color: '#888880' }}
-            >
+            <span className="font-mono text-[11px] mx-auto" style={{ color: '#8A8A8A' }}>
               portfolio.sh — bash
             </span>
           </div>
 
-          {/* Terminal body */}
+          {/* Body */}
           <div
             ref={scrollRef}
-            className="terminal-scroll overflow-y-auto p-6 flex flex-col gap-1"
-            style={{
-              maxHeight: '420px',
-              background: '#0A0A0A',
-            }}
+            className="terminal-scroll overflow-y-auto p-6 flex flex-col gap-0.5"
+            style={{ maxHeight: '400px', background: '#080808' }}
           >
             {lines.map((line, i) => (
               <p
                 key={i}
-                className="font-mono text-[13px] leading-relaxed"
+                className="font-mono text-[12px] leading-[1.7]"
                 style={{
-                  color: line.type === 'prompt' ? '#FFE500' : '#888880',
+                  color: line.type === 'prompt' ? '#D6FF3F' : '#8A8A8A',
                   whiteSpace: 'pre-wrap',
                 }}
               >
@@ -163,36 +163,35 @@ export function TerminalChat() {
             ))}
 
             {loading && (
-              <p className="font-mono text-[13px]" style={{ color: '#888880' }}>
+              <p className="font-mono text-[12px]" style={{ color: '#8A8A8A' }}>
                 {'  '}
                 <span className="cursor-blink">_</span>
               </p>
             )}
-
           </div>
 
-          {/* Input line */}
+          {/* Input */}
           <div
-            className="flex items-center px-6 py-4 gap-2"
+            className="flex items-center px-6 py-4 gap-3"
             style={{
-              background: '#0A0A0A',
-              borderTop: '1px solid #2A2A2A',
+              background: '#080808',
+              borderTop: '1px solid rgba(255,255,255,0.06)',
             }}
           >
-            <span className="font-mono text-[13px]" style={{ color: '#FFE500' }}>
+            <span className="font-mono text-[12px]" style={{ color: '#D6FF3F' }}>
               $
             </span>
             <input
               ref={inputRef}
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value.slice(0, 500))}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') sendMessage(input)
               }}
               placeholder="ask me anything..."
-              className="flex-1 bg-transparent font-mono text-[13px] outline-none"
-              style={{ color: '#F0EBE0', caretColor: '#FFE500' }}
+              className="flex-1 bg-transparent font-mono text-[12px] outline-none"
+              style={{ color: '#F5F3EE', caretColor: '#D6FF3F' }}
               disabled={loading}
               aria-label="Terminal input — ask Alex anything"
             />
@@ -200,8 +199,8 @@ export function TerminalChat() {
         </div>
 
         <p
-          className="text-center font-mono text-[11px] mt-4"
-          style={{ color: '#2A2A2A' }}
+          className="text-center font-mono text-[10px] mt-4"
+          style={{ color: 'rgba(255,255,255,0.15)' }}
         >
           Powered by Claude (claude-sonnet-4-6) — responds in character as Alex
         </p>
