@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const site = {
-  name: 'Alex De Souza',
-  title: 'Alex De Souza — Founder, Engineer & Product Builder',
+  name: 'Portfolio Alex DeSouza',
+  title: 'Alex DeSouza — Founder & AI Engineer',
   description:
     'Founder-led product platform for Alex De Souza: engineered systems, AI products, and high-leverage execution for ambitious teams.',
   url: 'https://alexsouza.dev',
@@ -67,7 +67,7 @@ export const navItems = [
 ] as const
 
 export const heroMetrics = [
-  { value: '02', label: 'Products brought to market' },
+  { value: '03', label: 'Products brought to market' },
   { value: '2024', label: 'Founder transition into full-time build mode' },
   { value: '06', label: 'Technical certifications completed' },
 ] as const
@@ -112,14 +112,14 @@ export const featuredProjects = [
     href: 'https://impulsosearch.com',
   },
   {
-    slug: 'founder-systems',
-    title: 'Founder Systems',
-    category: 'Internal leverage stack',
+    slug: 'youralexandria',
+    title: 'YourAlexandria',
+    category: 'Personal library SaaS',
     summary:
-      'Custom tooling across automation, ops, and product infrastructure to reduce manual drag and increase decision speed.',
-    impact: 'Automation, data pipelines, internal tools, delivery systems',
-    year: 'Ongoing',
-    href: '/contact',
+      'A browser-based digital library where readers upload EPUB and PDF files, annotate with quotes, bookmarks, and notes, and manage their collection under a tiered subscription.',
+    impact: 'Founder, full-stack engineer, reader architecture, subscription billing',
+    year: '2025 — Present',
+    href: 'https://yoalexa-five.vercel.app',
   },
 ] as const
 
@@ -142,7 +142,7 @@ export const timeline = [
 ] as const
 
 export const counters = [
-  { value: 2, suffix: '+', label: 'Products in active market deployment' },
+  { value: 3, suffix: '+', label: 'Products in active market deployment' },
   { value: 6, suffix: '', label: 'Certifications across AI, security, and systems' },
   { value: 4, suffix: '+', label: 'Years turning ideas into working software' },
 ] as const
@@ -185,6 +185,14 @@ export const workArchive = [
     description:
       'Inventory architecture with transactional integrity, auditability, and practical developer ergonomics.',
     href: 'https://github.com/AlexSouzaDev',
+  },
+  {
+    title: 'YourAlexandria',
+    type: 'Personal library SaaS',
+    year: '2025 — Present',
+    description:
+      'A tiered-subscription reading platform with EPUB and PDF rendering, annotation layers (quotes, bookmarks, notes), and per-user storage accounting. Built on Next.js 15, Drizzle ORM, Neon Postgres, Cloudflare R2, Clerk, and Stripe.',
+    href: '/contact',
   },
 ] as const
 

@@ -36,6 +36,7 @@ export function CursorProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!supportsHover()) return
     setEnabled(true)
+    document.documentElement.classList.add('custom-cursor-active')
 
     const onMove = (event: MouseEvent) => {
       mouse.current = { x: event.clientX, y: event.clientY }
@@ -76,6 +77,7 @@ export function CursorProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', onOver)
       if (raf.current) window.cancelAnimationFrame(raf.current)
+      document.documentElement.classList.remove('custom-cursor-active')
     }
   }, [active])
 

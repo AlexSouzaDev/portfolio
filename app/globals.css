@@ -100,6 +100,11 @@ pre,
   outline-offset: 3px;
 }
 
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
 .custom-cursor-ring,
 .custom-cursor-dot {
   pointer-events: none;
