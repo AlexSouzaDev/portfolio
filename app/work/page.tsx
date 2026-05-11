@@ -21,23 +21,27 @@ export default function WorkPage() {
         body="I prefer a selective archive: fewer entries, better judgment, stronger systems."
         cta={{ href: '/contact', label: 'Discuss a build' }}
       />
-      <section className="px-5 pb-20 sm:px-6 lg:px-8 lg:pb-28">
-        <div className="mx-auto grid max-w-7xl gap-5">
+      <section className="px-5 pb-20 sm:px-8 lg:px-16 lg:pb-28">
+        <div className="mx-auto max-w-7xl divide-y divide-[var(--line)] border-t border-[var(--line)]">
           {workArchive.map((project, index) => (
             <FadeIn key={project.title} delay={index * 0.05}>
               <Link
                 href={project.href}
-                className="group grid gap-5 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 transition hover:border-cyan-200/25 hover:bg-white/[0.05] md:grid-cols-[1.2fr_0.5fr_1fr]"
+                className="group grid gap-6 py-10 transition-colors hover:text-[var(--text)] md:grid-cols-[1.2fr_0.4fr_1fr]"
                 data-cursor-label="VIEW"
               >
                 <div>
-                  <p className="text-xs uppercase tracking-[0.26em] text-cyan-200/65">{project.type}</p>
-                  <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">
+                  <p className="text-[11px] uppercase tracking-[0.26em] text-[var(--muted)]">
+                    {project.type}
+                  </p>
+                  <h2 className="mt-4 text-2xl font-semibold tracking-[-0.05em] text-[var(--text)] sm:text-3xl">
                     <ScrambleText text={project.title} />
                   </h2>
                 </div>
-                <p className="text-sm uppercase tracking-[0.24em] text-white/44">{project.year}</p>
-                <p className="text-sm leading-7 text-white/62">{project.description}</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--muted)]">
+                  {project.year}
+                </p>
+                <p className="text-sm leading-7 text-[var(--muted)]">{project.description}</p>
               </Link>
             </FadeIn>
           ))}

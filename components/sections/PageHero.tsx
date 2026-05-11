@@ -13,14 +13,14 @@ export function PageHero({
   cta?: { href: string; label: string }
 }) {
   return (
-    <section className="relative overflow-hidden px-5 pb-14 pt-36 sm:px-6 lg:px-8 lg:pt-40">
-      <div className="mx-auto max-w-6xl">
+    <section className="px-5 pb-16 pt-36 sm:px-8 lg:px-16 lg:pt-44">
+      <div className="mx-auto max-w-7xl">
         <FadeIn className="max-w-4xl">
-          <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/68">{eyebrow}</p>
-          <h1 className="mt-5 text-5xl font-semibold tracking-[-0.08em] text-white sm:text-6xl lg:text-7xl">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted)]">{eyebrow}</p>
+          <h1 className="mt-5 text-5xl font-semibold tracking-[-0.07em] text-[var(--text)] sm:text-6xl lg:text-7xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-white/64 sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--muted)] sm:text-lg">
             {body}
           </p>
           {cta ? (

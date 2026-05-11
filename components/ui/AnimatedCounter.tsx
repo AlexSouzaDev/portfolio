@@ -1,12 +1,11 @@
 'use client'
 
-import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
+import { animate, useInView, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 export function AnimatedCounter({
   value,
   suffix,
-  label,
 }: {
   value: number
   suffix?: string
@@ -24,7 +23,7 @@ export function AnimatedCounter({
     }
 
     const controls = animate(0, value, {
-      duration: 1.2,
+      duration: 1.6,
       ease: [0.16, 1, 0.3, 1],
       onUpdate(latest) {
         if (ref.current) {
@@ -37,17 +36,11 @@ export function AnimatedCounter({
   }, [inView, reduceMotion, suffix, value])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+    <span
+      ref={ref}
+      className="block text-[clamp(4rem,8vw,7rem)] font-semibold leading-none tracking-[-0.07em] text-[var(--text)]"
     >
-      <span ref={ref} className="block text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
-        0
-      </span>
-      <p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/55">{label}</p>
-    </motion.div>
+      0
+    </span>
   )
 }

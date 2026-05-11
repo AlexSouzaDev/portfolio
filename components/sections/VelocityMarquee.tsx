@@ -5,33 +5,36 @@ import { useState } from 'react'
 
 const items = [
   'Founder energy',
-  'Premium execution',
-  'AI systems',
   'Product strategy',
+  'AI systems',
   'Next.js frontend',
   'Operational leverage',
+  'Premium execution',
+  'Founder-led SaaS',
+  'Engineering depth',
 ]
 
 export function VelocityMarquee() {
   const { scrollYProgress } = useScroll()
   const velocity = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
-  const [duration, setDuration] = useState(36)
+  const [duration, setDuration] = useState(40)
 
   useMotionValueEvent(velocity, 'change', (latest) => {
-    const next = Math.max(18, 36 - latest * 18)
+    const next = Math.max(22, 40 - latest * 22)
     setDuration(next)
   })
 
   return (
-    <section className="overflow-hidden border-y border-white/8 bg-white/[0.02] py-5">
+    <section className="overflow-hidden border-y border-[var(--line)] py-4">
       <motion.div
-        className="flex min-w-max gap-6 whitespace-nowrap text-sm uppercase tracking-[0.34em] text-white/45"
+        className="flex min-w-max gap-8 whitespace-nowrap text-[11px] uppercase tracking-[0.34em] text-[var(--muted)]"
         style={{ ['--marquee-duration' as string]: `${duration}s` }}
       >
-        <div className="marquee-track">
+        <div className="marquee-track flex gap-8">
           {[...items, ...items, ...items].map((item, index) => (
-            <span key={`${item}-${index}`} className="mx-3">
+            <span key={`${item}-${index}`} className="inline-flex items-center gap-8">
               {item}
+              <span className="h-px w-4 bg-[var(--line)]" />
             </span>
           ))}
         </div>

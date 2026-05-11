@@ -27,7 +27,11 @@ const seedPrompts = [
 
 const initialReply = [
   { id: 'whoami', type: 'response' as const, text: 'Founder. Engineer. Product builder.' },
-  { id: 'markets', type: 'response' as const, text: 'Currently focused on AI systems and SaaS products for real operational use.' },
+  {
+    id: 'markets',
+    type: 'response' as const,
+    text: 'Currently focused on AI systems and SaaS products for real operational use.',
+  },
 ]
 
 export function TerminalExperience() {
@@ -49,15 +53,14 @@ export function TerminalExperience() {
       setLines(initialReply)
       return
     }
-
-    const timeout = window.setTimeout(() => setBootIndex((value) => value + 1), 280)
+    const timeout = window.setTimeout(() => setBootIndex((v) => v + 1), 280)
     return () => window.clearTimeout(timeout)
   }, [bootIndex])
 
   useEffect(() => {
     if (!loading) return
     const interval = window.setInterval(() => {
-      setTypingDots((value) => (value + 1) % 4)
+      setTypingDots((v) => (v + 1) % 4)
     }, 220)
     return () => window.clearInterval(interval)
   }, [loading])
@@ -73,7 +76,10 @@ export function TerminalExperience() {
     const trimmed = message.trim()
     if (!trimmed || loading) return
 
-    setLines((current) => [...current, { id: crypto.randomUUID(), type: 'prompt', text: trimmed }])
+    setLines((current) => [
+      ...current,
+      { id: crypto.randomUUID(), type: 'prompt', text: trimmed },
+    ])
     setInput('')
     setLoading(true)
 
@@ -84,9 +90,7 @@ export function TerminalExperience() {
         body: JSON.stringify({ message: trimmed }),
       })
 
-      if (!response.ok) {
-        throw new Error('Request failed')
-      }
+      if (!response.ok) throw new Error('Request failed')
 
       const data = (await response.json()) as { reply: string }
       const nextLines = data.reply
@@ -112,24 +116,26 @@ export function TerminalExperience() {
   }
 
   return (
-    <section className="px-5 py-20 sm:px-6 lg:px-8 lg:py-28" id="ai-terminal">
+    <section className="px-5 py-20 sm:px-8 lg:px-16 lg:py-28" id="ai-terminal">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          eyebrow="AI terminal"
+          eyebrow="AI Terminal"
           title="A faster way to understand how Alex thinks, builds, and works."
           body="The interface is intentionally direct. Ask about products, systems, scope, or working style."
         />
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[2rem] border border-cyan-200/10 bg-slate-950/70 p-6 shadow-[0_24px_90px_rgba(0,0,0,0.4)]">
-            <p className="text-xs uppercase tracking-[0.26em] text-cyan-200/65">Suggested prompts</p>
-            <div className="mt-5 space-y-3">
+        <div className="mt-14 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-none border border-[var(--line)] bg-[var(--bg-elevated)] p-6">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--muted)]">
+              Suggested prompts
+            </p>
+            <div className="mt-5 space-y-2">
               {seedPrompts.map((prompt) => (
                 <button
                   key={prompt}
                   type="button"
                   onClick={() => sendMessage(prompt)}
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-left text-sm text-white/72 transition hover:border-cyan-200/30 hover:bg-white/[0.06]"
+                  className="w-full border-b border-[var(--line)] py-4 text-left text-sm text-[var(--muted)] transition-colors hover:text-[var(--text)]"
                   data-cursor-label="OPEN"
                 >
                   {prompt}
@@ -139,32 +145,32 @@ export function TerminalExperience() {
           </div>
 
           <motion.div
-            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 30, scale: 0.985 }}
+            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24, scale: 0.99 }}
             whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: easeOutExpo }}
-            className="overflow-hidden rounded-[2.2rem] border border-cyan-200/12 bg-slate-950/95 shadow-[0_40px_120px_rgba(0,0,0,0.45)]"
+            className="overflow-hidden border border-[var(--line)] bg-[var(--bg-elevated)]"
             onClick={() => inputRef.current?.focus()}
           >
-            <div className="flex items-center justify-between border-b border-cyan-200/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.01))] px-5 py-4">
+            <div className="flex items-center justify-between border-b border-[var(--line)] px-5 py-4">
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-rose-300/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-300/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-300/70" />
+                <span className="h-2 w-2 rounded-full bg-[var(--muted)]/40" />
+                <span className="h-2 w-2 rounded-full bg-[var(--muted)]/40" />
+                <span className="h-2 w-2 rounded-full bg-[var(--muted)]/40" />
               </div>
-              <div className="font-mono text-xs tracking-[0.24em] text-white/45">
+              <div className="font-mono text-[11px] tracking-[0.22em] text-[var(--muted)]">
                 alexos://terminal
               </div>
-              <div className="text-xs uppercase tracking-[0.24em] text-cyan-200/55">
+              <div className="text-[11px] uppercase tracking-[0.22em] text-[var(--muted)]">
                 online
               </div>
             </div>
 
             <div
               ref={bodyRef}
-              className="terminal-scrollbar h-[420px] overflow-y-auto bg-[radial-gradient(circle_at_top,rgba(151,241,255,0.06),transparent_35%),linear-gradient(180deg,#07111f_0%,#040913_100%)] px-5 py-6 font-mono text-[13px] leading-7 sm:px-6"
+              className="terminal-scrollbar h-[400px] overflow-y-auto bg-[var(--bg-elevated)] px-5 py-5 font-mono text-[13px] leading-7 sm:px-6"
             >
-              <div className="space-y-1 text-cyan-100/80">
+              <div className="space-y-1 text-[var(--muted)]">
                 {bootText.map((line, index) => (
                   <p key={`${line}-${index}`}>{line}</p>
                 ))}
@@ -176,10 +182,10 @@ export function TerminalExperience() {
                       key={line.id}
                       className={
                         line.type === 'prompt'
-                          ? 'text-cyan-200'
+                          ? 'text-[var(--text)]'
                           : line.type === 'system'
-                            ? 'text-white/44'
-                            : 'text-white/70'
+                            ? 'text-[var(--muted)]/50'
+                            : 'text-[var(--text)]/70'
                       }
                     >
                       {line.type === 'prompt' ? `> ${line.text}` : line.text}
@@ -191,7 +197,7 @@ export function TerminalExperience() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="text-white/45"
+                        className="text-[var(--muted)]"
                       >
                         thinking{'.'.repeat(typingDots)}
                       </motion.p>
@@ -206,26 +212,26 @@ export function TerminalExperience() {
                 event.preventDefault()
                 void sendMessage(input)
               }}
-              className="border-t border-cyan-200/10 bg-white/[0.02] p-4"
+              className="border-t border-[var(--line)] p-4"
             >
               <label htmlFor="terminal-input" className="sr-only">
                 Ask Alex a question
               </label>
-              <div className="flex items-center gap-3 rounded-[1.4rem] border border-white/10 bg-white/[0.03] px-4 py-3 focus-within:border-cyan-200/35 focus-within:shadow-[0_0_0_1px_rgba(151,241,255,0.18)]">
-                <span className="font-mono text-cyan-200">{'>'}</span>
+              <div className="flex items-center gap-3 border-b border-[var(--line)] pb-3 focus-within:border-[var(--text)]/30">
+                <span className="font-mono text-[var(--muted)]">{'>'}</span>
                 <input
                   id="terminal-input"
                   ref={inputRef}
                   value={input}
                   onChange={(event) => setInput(event.target.value.slice(0, 500))}
                   placeholder="Ask about product, systems, AI, or availability"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-white placeholder:text-white/28 focus:outline-none"
+                  className="min-w-0 flex-1 bg-transparent text-sm text-[var(--text)] placeholder:text-[var(--muted)]/40 focus:outline-none"
                   disabled={loading || bootIndex < bootLines.length}
                 />
                 <button
                   type="submit"
                   disabled={loading || bootIndex < bootLines.length}
-                  className="rounded-full border border-cyan-200/20 px-4 py-2 text-xs uppercase tracking-[0.24em] text-cyan-100 transition hover:border-cyan-200/45 disabled:opacity-40"
+                  className="text-[11px] uppercase tracking-[0.22em] text-[var(--muted)] transition-colors hover:text-[var(--text)] disabled:opacity-30"
                   data-cursor-label="SEND"
                 >
                   Send

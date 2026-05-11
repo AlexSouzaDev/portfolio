@@ -14,11 +14,13 @@ export function SectionHeading({
 }) {
   return (
     <div className={cn('max-w-3xl space-y-4', align === 'center' && 'mx-auto text-center')}>
-      <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/68">{eyebrow}</p>
-      <h2 className="text-3xl font-semibold tracking-[-0.06em] text-white sm:text-5xl">
+      <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted)]">{eyebrow}</p>
+      <h2 className="text-3xl font-semibold tracking-[-0.06em] text-[var(--text)] sm:text-5xl">
         <RevealText>{title}</RevealText>
       </h2>
-      {body ? <p className="text-base leading-7 text-white/64 sm:text-lg">{body}</p> : null}
+      {body ? (
+        <p className="text-base leading-7 text-[var(--muted)] sm:text-lg">{body}</p>
+      ) : null}
     </div>
   )
 }

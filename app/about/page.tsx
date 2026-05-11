@@ -21,14 +21,17 @@ export default function AboutPage() {
         body="My work sits at the intersection of product judgment, technical depth, and a strong bias toward shipping systems that survive contact with reality."
       />
       <FounderTimeline />
-      <section className="px-5 pb-20 sm:px-6 lg:px-8 lg:pb-28">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-          <FadeIn>
-            <h2 className="text-3xl font-semibold tracking-[-0.05em] text-white sm:text-4xl">
-              Operating principles
+      <section className="px-5 pb-20 sm:px-8 lg:px-16 lg:pb-28">
+        <div className="mx-auto max-w-7xl">
+          <FadeIn className="mb-12 border-b border-[var(--line)] pb-8">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted)]">
+              Operating Principles
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-[var(--text)] sm:text-4xl">
+              Clarity, leverage, and choices that age well.
             </h2>
-            <p className="mt-4 max-w-xl text-base leading-8 text-white/60">
-              I care about clarity, leverage, and product choices that can still look intelligent six months later.
+            <p className="mt-4 max-w-xl text-base leading-8 text-[var(--muted)]">
+              I care about product choices that can still look intelligent six months later.
             </p>
           </FadeIn>
           <FadeIn delay={0.06}>
