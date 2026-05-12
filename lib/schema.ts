@@ -5,7 +5,7 @@ export const personSchema = {
   '@type': 'Person',
   name: site.name,
   url: site.url,
-  jobTitle: 'Founder, Engineer & Product Builder',
+  jobTitle: 'Fullstack Engineer & AI Engineer',
   email: site.email,
   address: {
     '@type': 'PostalAddress',

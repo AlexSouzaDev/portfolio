@@ -7,7 +7,7 @@ export function FounderTimeline() {
       <div className="mx-auto max-w-7xl">
         <FadeIn className="mb-0 flex items-end justify-between border-b border-[var(--line)] pb-6">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted)]">
-            Founder Story
+            Engineering Journey
           </p>
           <p className="hidden text-[11px] tracking-[0.15em] text-[var(--muted)] sm:block">
             Built through repetition, not posturing.

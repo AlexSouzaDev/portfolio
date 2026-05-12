@@ -29,7 +29,7 @@ const PROJECTS: Project[] = [
       'Brazilian real estate agents were drowning in unqualified leads with no system to automate follow-up or qualification at scale.',
     result:
       'Production SaaS with AI agents handling lead qualification, ad automation, and CRM pipeline — currently live with paying customers.',
-    role: 'Founder, CTO, Lead Engineer',
+    role: 'Lead Fullstack & AI Engineer',
     story:
       'Built from zero to production in months. Combines Next.js frontend, Python backend, Claude SDK for AI agent logic, and BullMQ for job orchestration. The product does what agents used to do manually — at 10× speed.',
     tech: ['Next.js', 'TypeScript', 'Anthropic SDK', 'PostgreSQL', 'Redis', 'BullMQ', 'Prisma', 'Clerk', 'tRPC'],
@@ -48,7 +48,7 @@ const PROJECTS: Project[] = [
       'Real estate agents needed a way to surface relevant prospects from unstructured data sources — no tool existed for the Brazilian market.',
     result:
       "Standalone AI search product shipped under the Impulso brand architecture, extending the suite's total addressable market.",
-    role: 'Founder, Full-Stack Engineer',
+    role: 'Fullstack & AI Engineer',
     story:
       'The second product in the ImpulsoLead ecosystem. An AI-powered search layer that turns messy data into qualified prospect lists. Ships independently — each product strengthens the brand umbrella.',
     tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Anthropic SDK'],

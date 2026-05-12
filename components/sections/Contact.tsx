@@ -131,7 +131,7 @@ export function Contact() {
             </h2>
           </div>
           <div className="flex flex-col gap-2 font-mono text-[12px]" style={{ color: '#8A8A8A', maxWidth: '280px' }}>
-            <p>Available for founding engineer roles, technical co-founder conversations, and select freelance engagements.</p>
+            <p>Available for senior fullstack or AI engineering roles, and select freelance engagements.</p>
             <p className="mt-2" style={{ color: 'rgba(255,255,255,0.2)' }}>
               Not interested in: spec work, unpaid trials, or &ldquo;exposure.&rdquo;
             </p>

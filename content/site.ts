@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 
 export const site = {
   name: 'Portfolio Alex DeSouza',
-  title: 'Alex DeSouza — Founder & AI Engineer',
+  title: 'Alex DeSouza — Fullstack & AI Engineer',
   description:
-    'Founder-led product platform for Alex De Souza: engineered systems, AI products, and high-leverage execution for ambitious teams.',
+    'Alex De Souza — fullstack engineer and AI builder. Engineered systems, production AI products, and high-leverage execution for ambitious teams.',
   url: 'https://alexsouza.dev',
   ogImage: '/opengraph-image',
   email: 'alexandre@impulsolead.com',
@@ -68,14 +68,14 @@ export const navItems = [
 
 export const heroMetrics = [
   { value: '03', label: 'Products brought to market' },
-  { value: '2024', label: 'Founder transition into full-time build mode' },
+  { value: '2024', label: 'Year I started shipping AI products full-time' },
   { value: '06', label: 'Technical certifications completed' },
 ] as const
 
 export const capabilityPillars = [
   {
     eyebrow: 'Product strategy',
-    title: 'Founder-level judgment, not ticket-level execution.',
+    title: 'Engineering judgment, not ticket-level execution.',
     body: 'I turn unclear product ambition into a roadmap, system architecture, and shipping cadence that compounds instead of fragmenting.',
   },
   {
@@ -96,8 +96,8 @@ export const featuredProjects = [
     title: 'ImpulsoLead',
     category: 'AI workflow platform',
     summary:
-      'A founder-built SaaS platform helping Brazilian real estate teams qualify, organize, and act on leads faster.',
-    impact: 'Founder, product strategy, frontend, backend, AI systems',
+      'A fullstack AI SaaS platform helping Brazilian real estate teams qualify, organize, and act on leads faster.',
+    impact: 'Fullstack engineer, frontend, backend, AI systems',
     year: '2024 — Present',
     href: 'https://impulsolead.com',
   },
@@ -117,7 +117,7 @@ export const featuredProjects = [
     category: 'Personal library SaaS',
     summary:
       'A browser-based digital library where readers upload EPUB and PDF files, annotate with quotes, bookmarks, and notes, and manage their collection under a tiered subscription.',
-    impact: 'Founder, full-stack engineer, reader architecture, subscription billing',
+    impact: 'Full-stack engineer, reader architecture, subscription billing',
     year: '2025 — Present',
     href: 'https://yoalexa-five.vercel.app',
   },
@@ -136,7 +136,7 @@ export const timeline = [
   },
   {
     year: 'Now',
-    title: 'Building with founder discipline',
+    title: 'Building with engineering discipline',
     body: 'Balancing product ambition, engineering quality, and operational reality with a preference for systems that scale cleanly.',
   },
 ] as const
@@ -149,14 +149,14 @@ export const counters = [
 
 export const socialProof = [
   'Built from Portugal for a fast-moving Brazilian market.',
-  'Combines founder strategy with hands-on product engineering.',
+  'Combines deep engineering with hands-on product delivery.',
   'Comfortable at the intersection of interface, system, and AI workflow.',
 ] as const
 
 export const workArchive = [
   {
     title: 'ImpulsoLead',
-    type: 'Founder-led SaaS',
+    type: 'Fullstack AI SaaS',
     year: '2024 — Present',
     description:
       'Lead handling, qualification, and workflow software for real estate operators who need speed without losing control.',
@@ -223,7 +223,7 @@ export const usesGroups = [
 ] as const
 
 export const contactReasons = [
-  'Founding engineer or early technical leadership roles',
+  'Senior fullstack or AI engineering roles',
   'Product partnerships where engineering quality changes the outcome',
   'Selective freelance work with clear scope and meaningful ambition',
 ] as const

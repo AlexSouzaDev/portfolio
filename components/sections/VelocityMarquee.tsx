@@ -4,14 +4,14 @@ import { motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion
 import { useState } from 'react'
 
 const items = [
-  'Founder energy',
+  'Engineering depth',
   'Product strategy',
   'AI systems',
   'Next.js frontend',
   'Operational leverage',
   'Premium execution',
-  'Founder-led SaaS',
-  'Engineering depth',
+  'Fullstack SaaS',
+  'AI engineering',
 ]
 
 export function VelocityMarquee() {

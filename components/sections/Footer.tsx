@@ -73,7 +73,7 @@ export function Footer() {
           </Link>
           <div className="font-mono text-[11px] flex flex-col gap-1" style={{ color: '#8A8A8A' }}>
             <span style={{ color: '#F5F3EE' }}>Alex De Souza</span>
-            <span>Founder &amp; CTO — ImpulsoLead</span>
+            <span>Fullstack &amp; AI Engineer — ImpulsoLead</span>
             <span>alexsouza.dev</span>
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>© 2024–{currentYear}</span>
           </div>

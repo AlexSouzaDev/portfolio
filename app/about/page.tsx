@@ -17,8 +17,8 @@ export default function AboutPage() {
     <main>
       <PageHero
         eyebrow="About"
-        title="I build like a founder because I am one."
-        body="My work sits at the intersection of product judgment, technical depth, and a strong bias toward shipping systems that survive contact with reality."
+        title="I build from the ground up — system to interface."
+        body="My work sits at the intersection of fullstack engineering, AI integration, and a strong bias toward shipping systems that survive contact with reality."
       />
       <FounderTimeline />
       <section className="px-5 pb-20 sm:px-8 lg:px-16 lg:pb-28">

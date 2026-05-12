@@ -13,7 +13,7 @@ type Line = {
 
 const bootLines = [
   'Booting AlexOS...',
-  'Loading founder profile...',
+  'Loading engineer profile...',
   'Syncing systems...',
   'AI ready.',
   '>',
@@ -26,7 +26,7 @@ const seedPrompts = [
 ]
 
 const initialReply = [
-  { id: 'whoami', type: 'response' as const, text: 'Founder. Engineer. Product builder.' },
+  { id: 'whoami', type: 'response' as const, text: 'Fullstack engineer. AI builder. Product-minded.' },
   {
     id: 'markets',
     type: 'response' as const,

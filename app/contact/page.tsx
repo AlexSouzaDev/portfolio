@@ -6,7 +6,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter'
 
 export const metadata: Metadata = createMetadata(
   'Contact',
-  'Reach out to Alex De Souza for founder-grade product and engineering work.',
+  'Reach out to Alex De Souza for fullstack engineering and AI product work.',
   '/contact'
 )
 

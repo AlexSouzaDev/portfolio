@@ -7,13 +7,13 @@ export function HomeHero() {
       <div>
         <FadeIn>
           <p className="text-[11px] uppercase tracking-[0.34em] text-[var(--muted)]">
-            Founder · AI Engineer · Aveiro, Portugal
+            Fullstack Engineer · AI Engineer · Aveiro, Portugal
           </p>
         </FadeIn>
 
         <FadeIn delay={0.06}>
           <h1 className="mt-8 max-w-[22ch] text-[clamp(3rem,8.5vw,8rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-[var(--text)]">
-            Building sharp digital products with founder judgment and engineering depth.
+            Building sharp digital products with engineering depth and AI precision.
           </h1>
         </FadeIn>
       </div>

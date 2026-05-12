@@ -71,7 +71,7 @@ export function Hero() {
             className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 pulse-dot"
             style={{ background: '#D6FF3F' }}
           />
-          FOUNDER &amp; CTO — IMPULSOLEAD
+          FULLSTACK · AI ENGINEER — IMPULSOLEAD
           <span className="cursor-blink ml-0.5">|</span>
         </p>
 
@@ -255,7 +255,7 @@ export function Hero() {
           >
             <Image
               src="/photo.jpg"
-              alt="Alex De Souza — Founder & CTO"
+              alt="Alex De Souza — Fullstack & AI Engineer"
               fill
               className="object-cover transition-all duration-500 ease-out"
               style={{ filter: 'grayscale(100%) contrast(1.1)' }}
@@ -307,7 +307,7 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1, rotate: 2 }}
             transition={{ delay: 0.85, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            FOUNDER // 2024–
+            AI ENGINEER // 2024–
           </motion.div>
         </motion.div>
       </div>

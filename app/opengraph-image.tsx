@@ -48,7 +48,7 @@ export default function OGImage() {
               textTransform: 'uppercase',
             }}
           >
-            Founder Platform
+            Fullstack & AI Engineer
           </div>
         </div>
 
@@ -63,11 +63,11 @@ export default function OGImage() {
               letterSpacing: '-0.06em',
             }}
           >
-            <span>Founder, Engineer</span>
-            <span>&amp; Product Builder</span>
+            <span>Fullstack Engineer</span>
+            <span>&amp; AI Builder</span>
           </div>
           <div style={{ fontSize: 28, lineHeight: 1.4, color: 'rgba(245,249,255,0.72)' }}>
-            Premium digital products, AI systems, and founder-grade execution with real technical depth.
+            Premium digital products, AI systems, and fullstack engineering with real technical depth.
           </div>
         </div>
 

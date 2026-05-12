@@ -24,7 +24,7 @@ const MILESTONES = [
   {
     year: '2024',
     title: 'Founded ImpulsoLead.',
-    desc: 'Built a company. Hired no one. Shipped everything. CTO, PM, designer, and engineer in one person.',
+    desc: 'Built and shipped everything end-to-end — architecture, backend, frontend, AI integrations, and infrastructure. Solo fullstack.',
   },
   {
     year: '2024',
@@ -61,7 +61,7 @@ export function FounderStory() {
             className="font-mono text-[11px] uppercase tracking-[0.14em] mb-8"
             style={{ color: '#D6FF3F', opacity: 0.7 }}
           >
-            FOUNDER STORY
+            MY STORY
           </p>
 
           <div className="flex flex-col gap-5">

@@ -30,7 +30,7 @@ export function AboutStrip() {
           className="font-mono text-[13px] mt-6"
           style={{ color: '#888880' }}
         >
-          — Alex De Souza, CTO &amp; Founder
+          — Alex De Souza, Fullstack &amp; AI Engineer
         </p>
       </motion.div>
 

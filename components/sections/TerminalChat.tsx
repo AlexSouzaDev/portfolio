@@ -10,7 +10,7 @@ interface Line {
 
 const INITIAL_LINES: Line[] = [
   { type: 'prompt', text: '$ whoami' },
-  { type: 'response', text: '  Alex De Souza — Founder & CTO, ImpulsoLead' },
+  { type: 'response', text: '  Alex De Souza — Fullstack & AI Engineer, ImpulsoLead' },
   { type: 'prompt', text: '$ stack' },
   { type: 'response', text: '  Next.js · TypeScript · Python · Anthropic SDK · PostgreSQL · Redis' },
   { type: 'prompt', text: '$ products' },
