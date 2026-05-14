@@ -6,7 +6,7 @@ import { SiteChrome } from '@/components/layout/SiteChrome'
 import { personSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 const hemingway = localFont({
-  src: '../assets/fonts/Heming Variable.ttf',
+  src: '../assets/fonts/Heming Variable.woff2',
   variable: '--font-sans',
   display: 'swap',
 })
