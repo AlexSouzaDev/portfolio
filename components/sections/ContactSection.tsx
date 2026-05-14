@@ -1,34 +1,9 @@
-'use client'
-
-import { useState } from 'react'
 import { contactReasons } from '@/content/site'
 import { RevealText } from '@/components/motion/RevealText'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 
 export function ContactSection() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setStatus('loading')
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-
-      if (!response.ok) throw new Error('Failed')
-      setStatus('success')
-      setForm({ name: '', email: '', message: '' })
-    } catch {
-      setStatus('error')
-    }
-  }
-
   return (
     <section className="px-5 py-20 sm:px-8 lg:px-16 lg:py-28">
       <div className="mx-auto max-w-7xl">
@@ -56,92 +31,17 @@ export function ContactSection() {
             ))}
           </FadeIn>
 
-          <FadeIn delay={0.08}>
-            <form onSubmit={onSubmit} className="space-y-6">
-              <div className="grid gap-6 sm:grid-cols-2">
-                <Field
-                  id="name"
-                  label="Name"
-                  value={form.name}
-                  onChange={(value) => setForm((c) => ({ ...c, name: value }))}
-                />
-                <Field
-                  id="email"
-                  label="Email"
-                  type="email"
-                  value={form.email}
-                  onChange={(value) => setForm((c) => ({ ...c, email: value }))}
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="mb-3 block text-[11px] uppercase tracking-[0.26em] text-[var(--muted)]"
-                >
-                  Project context
-                </label>
-                <textarea
-                  id="message"
-                  value={form.message}
-                  onChange={(event) =>
-                    setForm((c) => ({ ...c, message: event.target.value.slice(0, 500) }))
-                  }
-                  required
-                  rows={7}
-                  className="w-full border-0 border-b border-[var(--line)] bg-transparent pb-4 text-sm text-[var(--text)] placeholder:text-[var(--muted)]/50 focus:border-[var(--text)]/30 focus:outline-none"
-                  placeholder="What are you building, what stage are you in, and where do you need leverage?"
-                />
-              </div>
-
-              <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-[var(--muted)]">
-                  {status === 'success' && "Message sent. I’ll review it shortly."}
-                  {status === 'error' && 'Something failed. Try again in a moment.'}
-                  {status === 'idle' && 'Clear scope beats vague hype.'}
-                  {status === 'loading' && 'Sending...'}
-                </p>
-                <MagneticButton type="submit" cursorLabel="SEND" disabled={status === 'loading'}>
-                  Send enquiry
-                </MagneticButton>
-              </div>
-            </form>
+          <FadeIn delay={0.08} className="flex flex-col justify-center gap-6">
+            <p className="text-sm leading-7 text-[var(--muted)]">Clear scope beats vague hype.</p>
+            <MagneticButton
+              href="mailto:alexandre@impulsolead.com"
+              cursorLabel="EMAIL"
+            >
+              Send enquiry
+            </MagneticButton>
           </FadeIn>
         </div>
       </div>
     </section>
-  )
-}
-
-function Field({
-  id,
-  label,
-  value,
-  onChange,
-  type = 'text',
-}: {
-  id: string
-  label: string
-  value: string
-  onChange: (value: string) => void
-  type?: string
-}) {
-  return (
-    <div>
-      <label
-        htmlFor={id}
-        className="mb-3 block text-[11px] uppercase tracking-[0.26em] text-[var(--muted)]"
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        required
-        className="w-full border-0 border-b border-[var(--line)] bg-transparent pb-3 text-sm text-[var(--text)] placeholder:text-[var(--muted)]/50 focus:border-[var(--text)]/30 focus:outline-none"
-      />
-    </div>
   )
 }

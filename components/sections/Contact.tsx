@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
+
 const CHANNELS = [
   {
     label: 'EMAIL',
@@ -58,49 +59,6 @@ function LiveClock() {
 }
 
 export function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-  const [charCount, setCharCount] = useState(0)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('sending')
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (res.ok) {
-        setStatus('sent')
-        setForm({ name: '', email: '', message: '' })
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  const fieldStyle: React.CSSProperties = {
-    background: 'rgba(255,255,255,0.02)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    color: '#F5F3EE',
-    fontFamily: 'var(--font-jetbrains), monospace',
-    fontSize: '13px',
-    padding: '12px 14px',
-    outline: 'none',
-    width: '100%',
-    transition: 'border-color 150ms',
-  }
-
-  const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.currentTarget.style.borderColor = 'rgba(214,255,63,0.5)'
-  }
-  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
-  }
-
   return (
     <section
       className="w-full"
@@ -144,98 +102,32 @@ export function Contact() {
         className="grid px-8 py-16"
         style={{ gridTemplateColumns: '1fr 1fr', gap: '0' }}
       >
-        {/* Left — form */}
+        {/* Left — direct contact */}
         <motion.div
-          className="pr-12"
+          className="pr-12 flex flex-col justify-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <input
-              type="text"
-              placeholder="NAME"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              required
-              aria-label="Your name"
-              style={{ ...fieldStyle, textTransform: 'uppercase', letterSpacing: '0.06em' }}
-            />
-            <input
-              type="email"
-              placeholder="EMAIL"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              required
-              aria-label="Your email"
-              style={fieldStyle}
-            />
-            <div className="relative">
-              <textarea
-                placeholder="MESSAGE — what are you building?"
-                value={form.message}
-                onChange={(e) => {
-                  const val = e.target.value.slice(0, 500)
-                  setForm({ ...form, message: val })
-                  setCharCount(val.length)
-                }}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                required
-                rows={6}
-                maxLength={500}
-                aria-label="Your message"
-                style={{ ...fieldStyle, resize: 'none' }}
-              />
-              <span
-                className="absolute bottom-3 right-3 font-mono text-[10px]"
-                style={{ color: 'rgba(255,255,255,0.2)' }}
-              >
-                {charCount}/500
-              </span>
-            </div>
-
-            <button
-              type="submit"
-              disabled={status === 'sending' || status === 'sent'}
-              className="w-full font-mono text-[12px] uppercase tracking-[0.1em] py-4 font-semibold transition-all duration-150"
-              style={{
-                background: status === 'sent' ? 'transparent' : '#D6FF3F',
-                color: status === 'sent' ? '#D6FF3F' : '#080808',
-                border: '1px solid #D6FF3F',
-                cursor: status === 'sent' ? 'default' : 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                if (status !== 'sent' && status !== 'sending') {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.color = '#D6FF3F'
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (status !== 'sent' && status !== 'sending') {
-                  e.currentTarget.style.background = '#D6FF3F'
-                  e.currentTarget.style.color = '#080808'
-                }
-              }}
-            >
-              {status === 'sent'
-                ? '✓ SENT — RESPONSE WITHIN 48H'
-                : status === 'sending'
-                ? 'SENDING...'
-                : 'SEND MESSAGE →'}
-            </button>
-
-            {status === 'error' && (
-              <p className="font-mono text-[11px]" style={{ color: '#FF2D00' }}>
-                Something went wrong. Email me directly.
-              </p>
-            )}
-          </form>
+          <p className="font-mono text-[13px] leading-[1.85] mb-8" style={{ color: '#8A8A8A' }}>
+            Send an email directly and I&apos;ll reply within 48 hours.
+          </p>
+          <a
+            href="mailto:alexandre@impulsolead.com"
+            className="w-full font-mono text-[12px] uppercase tracking-[0.1em] py-4 font-semibold text-center transition-all duration-150"
+            style={{ background: '#D6FF3F', color: '#080808', border: '1px solid #D6FF3F', display: 'block' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.color = '#D6FF3F'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#D6FF3F'
+              e.currentTarget.style.color = '#080808'
+            }}
+          >
+            EMAIL ME →
+          </a>
         </motion.div>
 
         {/* Right — channels */}

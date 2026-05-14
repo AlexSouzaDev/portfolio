@@ -25,11 +25,8 @@ const INITIAL_LINES: Line[] = [
 
 export function TerminalChat() {
   const [lines, setLines] = useState<Line[]>([])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
   const [visibleCount, setVisibleCount] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     let i = 0
@@ -52,40 +49,7 @@ export function TerminalChat() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [lines, loading])
-
-  const sendMessage = async (msg: string) => {
-    if (!msg.trim() || loading) return
-
-    setLines((prev) => [...prev, { type: 'prompt', text: `$ ${msg}` }])
-    setInput('')
-    setLoading(true)
-
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: msg }),
-      })
-
-      if (!res.ok) throw new Error('Rate limited or server error')
-
-      const data = await res.json() as { reply: string }
-      const responseLines = data.reply
-        .split('\n')
-        .filter((l: string) => l.trim())
-        .map((l: string) => ({ type: 'response' as const, text: `  ${l}` }))
-
-      setLines((prev) => [...prev, ...responseLines])
-    } catch {
-      setLines((prev) => [
-        ...prev,
-        { type: 'response', text: '  [error] Could not reach server. Try again.' },
-      ])
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [lines])
 
   return (
     <section
@@ -123,7 +87,6 @@ export function TerminalChat() {
         <div
           className="w-full max-w-3xl mx-auto"
           style={{ border: '1px solid rgba(255,255,255,0.1)' }}
-          onClick={() => inputRef.current?.focus()}
         >
           {/* Title bar */}
           <div
@@ -162,48 +125,8 @@ export function TerminalChat() {
               </p>
             ))}
 
-            {loading && (
-              <p className="font-mono text-[12px]" style={{ color: '#8A8A8A' }}>
-                {'  '}
-                <span className="cursor-blink">_</span>
-              </p>
-            )}
-          </div>
-
-          {/* Input */}
-          <div
-            className="flex items-center px-6 py-4 gap-3"
-            style={{
-              background: '#080808',
-              borderTop: '1px solid rgba(255,255,255,0.06)',
-            }}
-          >
-            <span className="font-mono text-[12px]" style={{ color: '#D6FF3F' }}>
-              $
-            </span>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value.slice(0, 500))}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') sendMessage(input)
-              }}
-              placeholder="ask me anything..."
-              className="flex-1 bg-transparent font-mono text-[12px] outline-none"
-              style={{ color: '#F5F3EE', caretColor: '#D6FF3F' }}
-              disabled={loading}
-              aria-label="Terminal input — ask Alex anything"
-            />
           </div>
         </div>
-
-        <p
-          className="text-center font-mono text-[10px] mt-4"
-          style={{ color: 'rgba(255,255,255,0.15)' }}
-        >
-          Powered by Claude (claude-sonnet-4-6) — responds in character as Alex
-        </p>
       </motion.div>
     </section>
   )
