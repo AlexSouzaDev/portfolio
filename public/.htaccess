@@ -1,6 +1,9 @@
 Options -MultiViews -Indexes
 RewriteEngine On
 
+# Always serve _next static assets without rewriting
+RewriteRule ^_next/(.*)$ _next/$1 [L]
+
 # Serve existing files and directories directly
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
