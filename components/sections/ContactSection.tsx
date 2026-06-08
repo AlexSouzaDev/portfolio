@@ -1,4 +1,4 @@
-import { contactReasons } from '@/content/site'
+import { contactReasons, site } from '@/content/site'
 import { RevealText } from '@/components/motion/RevealText'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { MagneticButton } from '@/components/ui/MagneticButton'
@@ -34,7 +34,7 @@ export function ContactSection() {
           <FadeIn delay={0.08} className="flex flex-col justify-center gap-6">
             <p className="text-sm leading-7 text-[var(--muted)]">Clear scope beats vague hype.</p>
             <MagneticButton
-              href="mailto:alexandre@impulsolead.com"
+              href={`mailto:${site.email}`}
               cursorLabel="EMAIL"
             >
               Send enquiry

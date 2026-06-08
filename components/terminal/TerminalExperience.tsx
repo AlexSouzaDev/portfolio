@@ -20,11 +20,15 @@ const bootLines = [
 ]
 
 const initialReply: Line[] = [
-  { id: 'whoami', type: 'response', text: 'Fullstack engineer. AI builder. Product-minded.' },
   {
-    id: 'markets',
+    id: 'whoami',
     type: 'response',
-    text: 'Currently focused on AI systems and SaaS products for real operational use.',
+    text: 'AI engineer & full-stack builder. Founding engineer → CTO at ImpulsoLead.',
+  },
+  {
+    id: 'focus',
+    type: 'response',
+    text: 'Building production LLM systems: multi-agent orchestration, RAG, and the eval harnesses that keep them honest.',
   },
 ]
 

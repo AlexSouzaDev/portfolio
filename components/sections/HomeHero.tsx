@@ -7,7 +7,7 @@ export function HomeHero() {
       <div>
         <FadeIn>
           <p className="text-[11px] uppercase tracking-[0.34em] text-[var(--muted)]">
-            Fullstack Engineer · AI Engineer · Aveiro, Portugal
+            AI Engineer · Full-Stack · CTO @ ImpulsoLead · Aveiro, Portugal
           </p>
         </FadeIn>
 
@@ -22,7 +22,7 @@ export function HomeHero() {
         <div className="border-t border-[var(--line)] pt-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-sm text-sm leading-7 text-[var(--muted)]">
-              I design products, engineer systems, and apply AI where it changes the business result. The goal is leverage, not surface area.
+              I architect products, engineer the systems beneath them, and ship LLM and multi-agent features where they change the business result. The goal is leverage, not surface area.
             </p>
             <div className="flex flex-wrap gap-3">
               <MagneticButton href="/work" cursorLabel="VIEW">

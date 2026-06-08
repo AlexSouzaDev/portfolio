@@ -1,18 +1,18 @@
 import type { Metadata } from 'next'
 
 export const site = {
-  name: 'Portfolio Alex DeSouza',
-  title: 'Alex DeSouza — Fullstack & AI Engineer',
+  name: 'Alex De Souza',
+  title: 'Alex De Souza — AI Engineer · Full-Stack · LLM Systems',
   description:
-    'Alex De Souza — fullstack engineer and AI builder. Engineered systems, production AI products, and high-leverage execution for ambitious teams.',
+    'Alex De Souza — AI engineer and full-stack builder. I architect production LLM systems, multi-agent orchestration, and B2B SaaS. Founding engineer turned CTO at ImpulsoLead.',
   url: 'https://alexsouza.dev',
   ogImage: '/opengraph-image',
-  email: 'alexandre@impulsolead.com',
+  email: 'contact@alexsouza.dev',
   location: 'Aveiro, Portugal',
+  role: 'Founding Engineer → CTO @ ImpulsoLead',
   social: {
     github: 'https://github.com/AlexSouzaDev',
-    linkedin: 'https://www.linkedin.com',
-    x: 'https://x.com',
+    linkedin: 'https://www.linkedin.com/in/alex-desouza-',
   },
 } as const
 
@@ -67,26 +67,26 @@ export const navItems = [
 ] as const
 
 export const heroMetrics = [
-  { value: '03', label: 'Products brought to market' },
-  { value: '2024', label: 'Year I started shipping AI products full-time' },
-  { value: '06', label: 'Technical certifications completed' },
+  { value: '07', label: 'Professional certifications across AI, security & systems' },
+  { value: '11', label: 'AI agent task types orchestrated in production' },
+  { value: '2025', label: 'Joined ImpulsoLead — promoted to CTO within 6 months' },
 ] as const
 
 export const capabilityPillars = [
   {
-    eyebrow: 'Product strategy',
+    eyebrow: 'Product & architecture',
     title: 'Engineering judgment, not ticket-level execution.',
-    body: 'I turn unclear product ambition into a roadmap, system architecture, and shipping cadence that compounds instead of fragmenting.',
+    body: 'I turn unclear product ambition into system architecture and a shipping cadence that compounds. At ImpulsoLead I architected a multi-tenant B2B SaaS end to end and grew into the CTO seat.',
   },
   {
-    eyebrow: 'Engineering systems',
-    title: 'Interfaces, APIs, automation, and the operational spine underneath.',
-    body: 'From premium frontends to resilient backend workflows, I care about speed, maintainability, and leverage in equal measure.',
+    eyebrow: 'Full-stack systems',
+    title: 'Type-safe interfaces, resilient backends, and the operational spine underneath.',
+    body: 'Next.js and tRPC on the front, FastAPI and async pipelines on BullMQ + Redis behind them. I care about speed, maintainability, and leverage in equal measure.',
   },
   {
-    eyebrow: 'AI integration',
-    title: 'Models are useful when they sharpen workflow, not when they decorate the pitch.',
-    body: 'I design AI features around business outcomes: qualification, retrieval, decision support, and automation with clear product logic.',
+    eyebrow: 'AI & LLM systems',
+    title: 'Models earn their place when they sharpen the workflow.',
+    body: 'I design multi-agent orchestration with LangGraph and the Claude SDK, RAG with pgvector, and the evaluation harnesses — faithfulness, safety, red-teaming — that keep them honest in production.',
   },
 ] as const
 
@@ -94,32 +94,52 @@ export const featuredProjects = [
   {
     slug: 'impulsolead',
     title: 'ImpulsoLead',
-    category: 'AI workflow platform',
+    category: 'B2B AI SaaS · CTO',
     summary:
-      'A fullstack AI SaaS platform helping Brazilian real estate teams qualify, organize, and act on leads faster.',
-    impact: 'Fullstack engineer, frontend, backend, AI systems',
-    year: '2024 — Present',
+      'Multi-tenant B2B SaaS for the Brazilian real-estate market, architected end to end (Next.js App Router, tRPC, Prisma, PostgreSQL). I designed a LangGraph + Claude agent layer spanning 11 task types for lead analysis, response generation, and campaign automation.',
+    impact: 'Founding engineer → CTO · architecture, AI strategy, infrastructure',
+    year: '2025 — Present',
     href: 'https://impulsolead.com',
   },
   {
-    slug: 'impulsosearch',
-    title: 'ImpulsoSearch',
-    category: 'Search intelligence layer',
+    slug: 'craft',
+    title: 'CRAFT',
+    category: 'LLM research · Python',
     summary:
-      'An AI-assisted search layer designed to surface high-intent opportunities from fragmented real estate data sources.',
-    impact: 'Search experience, retrieval design, data workflow architecture',
-    year: '2024 — Present',
-    href: 'https://impulsosearch.com',
+      'Causal Rationale Attribution Faithfulness Test — an open-source library that empirically checks whether an LLM agent’s stated reasoning actually drove its decision, using a randomized perturbation experiment with a placebo control. Zero runtime deps, mypy-clean, CI-ready CLI.',
+    impact: 'Open-source library · randomized causal testing',
+    year: '2026',
+    href: 'https://github.com/AlexSouzaDev/craft',
   },
   {
-    slug: 'youralexandria',
-    title: 'YourAlexandria',
-    category: 'Personal library SaaS',
+    slug: 'red-agent',
+    title: 'red-agent',
+    category: 'AI safety · TypeScript',
     summary:
-      'A browser-based digital library where readers upload EPUB and PDF files, annotate with quotes, bookmarks, and notes, and manage their collection under a tiered subscription.',
-    impact: 'Full-stack engineer, reader architecture, subscription billing',
-    year: '2025 — Present',
-    href: 'https://yoalexa-five.vercel.app',
+      'Adversarial stress-test harness that injects YAML-defined attacks into tool-using LLM agents and uses a Claude LLM-judge to classify compromise vs. safe refusal vs. detection. Covers 3 victim models, 5 attack categories, and 4 safety metrics, persisted via Prisma with a Next.js dashboard.',
+    impact: 'Adversarial evaluation · multi-model benchmarking',
+    year: '2026',
+    href: 'https://github.com/AlexSouzaDev/red-agent',
+  },
+  {
+    slug: 'treeport',
+    title: 'treeport',
+    category: 'Dev tooling · Python',
+    summary:
+      'Production CLI/library that runs AI coding agents (Claude Code, Aider, GPT-4o, Gemini) inside isolated Docker containers backed by git worktrees, then fast-forward merges the results. asyncio + Pydantic v2 + Typer, 5 backends, 48 passing tests.',
+    impact: 'Open-source · 5 agent backends · most-starred repo',
+    year: '2026',
+    href: 'https://github.com/AlexSouzaDev/treeport',
+  },
+  {
+    slug: 'cadre',
+    title: 'CADRE',
+    category: 'Multi-agent security · Python',
+    summary:
+      'Multi-agent SIEM testing whether LangGraph-orchestrated agents beat a monolithic LLM on threat-detection accuracy and cost. Ingests real intrusion datasets (CIC-IDS2017, UNSW-NB15), streams events over Redis, and gates response actions behind a tRPC human-approval UI.',
+    impact: 'Research framework · agentic threat detection',
+    year: '2026',
+    href: 'https://github.com/AlexSouzaDev/CADRE',
   },
 ] as const
 
@@ -130,69 +150,180 @@ export const timeline = [
     body: 'Moved quickly from fundamentals into real builds, learning by putting work under pressure instead of leaving it in tutorial mode.',
   },
   {
-    year: '2024',
-    title: 'Founded ImpulsoLead',
-    body: 'Focused on a market with urgency, signal, and room for better software: Brazilian real estate.',
+    year: '2022',
+    title: 'Freelance software developer',
+    body: 'Solo-delivered websites, full-stack apps, and REST APIs for local businesses and research projects across TypeScript, Python, PHP, and C# — from requirements through deployment and maintenance.',
+  },
+  {
+    year: '2023',
+    title: 'Computer programming at Universidade de Aveiro',
+    body: 'Technical higher education (CTeSP) at ESTGA — systems & network programming, network security, algorithms, discrete mathematics, and databases.',
+  },
+  {
+    year: '2025',
+    title: 'Joined ImpulsoLead as founding engineer',
+    body: 'Architected a multi-tenant B2B SaaS for the Brazilian real-estate market end to end — Next.js App Router, tRPC, Prisma, and PostgreSQL.',
   },
   {
     year: 'Now',
-    title: 'Building with engineering discipline',
-    body: 'Balancing product ambition, engineering quality, and operational reality with a preference for systems that scale cleanly.',
+    title: 'Promoted to CTO within six months',
+    body: 'Owning architecture, AI strategy, and infrastructure — including a LangGraph + Claude agent orchestration layer spanning 11 task types, on an async BullMQ + Redis pipeline.',
   },
 ] as const
 
 export const counters = [
-  { value: 3, suffix: '+', label: 'Products in active market deployment' },
-  { value: 6, suffix: '', label: 'Certifications across AI, security, and systems' },
-  { value: 4, suffix: '+', label: 'Years turning ideas into working software' },
+  { value: 7, suffix: '', label: 'Professional certifications across AI, security, and systems' },
+  { value: 11, suffix: '', label: 'AI agent task types orchestrated in production at ImpulsoLead' },
+  { value: 15, suffix: '+', label: 'Projects shipped across web, AI, ML, and systems' },
 ] as const
 
 export const socialProof = [
-  'Built from Portugal for a fast-moving Brazilian market.',
-  'Combines deep engineering with hands-on product delivery.',
-  'Comfortable at the intersection of interface, system, and AI workflow.',
+  'Building from Portugal for a fast-moving Brazilian market.',
+  'Founding engineer turned CTO — architecture, AI strategy, and infrastructure.',
+  'Comfortable across interface, distributed systems, and multi-agent AI.',
 ] as const
 
 export const workArchive = [
   {
     title: 'ImpulsoLead',
-    type: 'Fullstack AI SaaS',
-    year: '2024 — Present',
+    type: 'Fullstack AI SaaS · CTO',
+    year: '2025 — Present',
     description:
-      'Lead handling, qualification, and workflow software for real estate operators who need speed without losing control.',
+      'Multi-tenant B2B SaaS for Brazilian real-estate teams. End-to-end architecture (Next.js, tRPC, Prisma, PostgreSQL), a LangGraph + Claude agent layer across 11 task types, dual payment gateway (Stripe + InfinitePay), and full i18n + LGPD compliance.',
     href: 'https://impulsolead.com',
+  },
+  {
+    title: 'CRAFT',
+    type: 'LLM research library · Python',
+    year: '2026',
+    description:
+      'Causal Rationale Attribution Faithfulness Test — empirically checks whether an LLM agent’s stated reasoning causally drove its decision via a randomized perturbation experiment with a placebo control. Zero runtime deps, mypy-clean, CI-ready CLI with a --fail-under gate.',
+    href: 'https://github.com/AlexSouzaDev/craft',
+  },
+  {
+    title: 'red-agent',
+    type: 'Adversarial LLM harness · TypeScript',
+    year: '2026',
+    description:
+      'Stress-testing framework that injects YAML-defined attacks into tool-using agents and uses a Claude LLM-judge to classify compromise vs. safe refusal vs. detection. 3 victim models, 5 attack categories, 4 safety metrics, persisted via Prisma with a Next.js dashboard.',
+    href: 'https://github.com/AlexSouzaDev/red-agent',
+  },
+  {
+    title: 'treeport',
+    type: 'AI coding-agent orchestrator · Python',
+    year: '2026',
+    description:
+      'Runs AI coding agents (Claude Code, Aider, GPT-4o, Gemini) inside isolated Docker containers backed by git worktrees, then fast-forward merges the results. asyncio + Pydantic v2 + Typer, 5 backends, 48 passing tests.',
+    href: 'https://github.com/AlexSouzaDev/treeport',
+  },
+  {
+    title: 'CADRE',
+    type: 'Multi-agent SIEM · Python',
+    year: '2026',
+    description:
+      'Tests whether LangGraph-orchestrated agents outperform a monolithic LLM on threat-detection accuracy and cost. Ingests CIC-IDS2017 and UNSW-NB15, streams events over Redis, and gates response actions behind a sandboxed tRPC human-approval UI.',
+    href: 'https://github.com/AlexSouzaDev/CADRE',
+  },
+  {
+    title: 'cardioML',
+    type: 'ML pipeline · Python',
+    year: '2026',
+    description:
+      'Reproducible heart-disease classification benchmarking 5 classifiers with Optuna tuning, MLflow tracking, and SHAP explainability. Reaches 0.93 AUC-ROC with SMOTE applied correctly inside the training fold.',
+    href: 'https://github.com/AlexSouzaDev/cardioML',
+  },
+  {
+    title: 'Inventory-API',
+    type: 'Backend system design · FastAPI',
+    year: '2025',
+    description:
+      'Enterprise inventory API with ACID-compliant stock transfers: deterministic row-locking, atomic decrements, and DB-trigger-enforced immutable audit logs. Clean Controller–Service–Repository architecture; full stack starts with one docker compose up.',
+    href: 'https://github.com/AlexSouzaDev/Inventory-API',
+  },
+  {
+    title: 'AppleVault',
+    type: 'Consumer product · TypeScript',
+    year: '2025',
+    description:
+      'Instant iPhone resale valuation with a personal device vault. Next.js (App Router), Clerk auth, tRPC, Prisma, and Tailwind, with a real-time price formula gated behind authentication.',
+    href: 'https://github.com/AlexSouzaDev/AppleVault',
+  },
+  {
+    title: 'n-body',
+    type: 'Scientific computing · C++',
+    year: '2026',
+    description:
+      'High-performance N-body gravitational simulator for the solar system, built in C++20 with symplectic integrators and real NASA ephemeris data.',
+    href: 'https://github.com/AlexSouzaDev/n-body',
   },
   {
     title: 'ImpulsoSearch',
     type: 'AI search infrastructure',
     year: '2024 — Present',
     description:
-      'Search and discovery infrastructure for sourcing opportunities from noisy, unstructured channels.',
+      'Search and discovery layer for sourcing high-intent opportunities from noisy, unstructured real-estate channels.',
     href: 'https://impulsosearch.com',
-  },
-  {
-    title: 'AppleVault',
-    type: 'Consumer product experiment',
-    year: '2024',
-    description:
-      'A product exploration around device valuation, ownership history, and a sharper resale experience.',
-    href: 'https://github.com/AlexSouzaDev',
-  },
-  {
-    title: 'Inventory API',
-    type: 'Backend system design',
-    year: '2024',
-    description:
-      'Inventory architecture with transactional integrity, auditability, and practical developer ergonomics.',
-    href: 'https://github.com/AlexSouzaDev',
   },
   {
     title: 'YourAlexandria',
     type: 'Personal library SaaS',
-    year: '2025 — Present',
+    year: '2025',
     description:
       'A tiered-subscription reading platform with EPUB and PDF rendering, annotation layers (quotes, bookmarks, notes), and per-user storage accounting. Built on Next.js 15, Drizzle ORM, Neon Postgres, Cloudflare R2, Clerk, and Stripe.',
-    href: '/contact',
+    href: 'https://yoalexa-five.vercel.app',
+  },
+] as const
+
+export const education = {
+  school: 'Universidade de Aveiro — ESTGA',
+  program: 'Technical Higher Education (CTeSP), Computer Programming',
+  location: 'Águeda, Portugal',
+  period: '2023 — 2026',
+  detail:
+    'Coursework across systems & network programming, low-level systems, network security, algorithms, discrete mathematics, and databases.',
+} as const
+
+export const certifications = [
+  { title: 'MLOps', issuer: 'Duke University' },
+  { title: 'Generative AI for Growth Marketing', issuer: 'IBM' },
+  { title: 'Full-Stack Developer', issuer: 'Microsoft' },
+  { title: 'Cybersecurity Analyst', issuer: 'Microsoft' },
+  { title: 'SQL', issuer: 'University of Colorado Boulder' },
+  { title: 'Essential Mathematics for CS', issuer: 'University of London' },
+  { title: 'Open Science 101', issuer: 'NASA' },
+] as const
+
+export const skillGroups = [
+  {
+    label: 'AI / ML',
+    items: [
+      'Anthropic Claude SDK',
+      'LangGraph',
+      'Multi-agent orchestration',
+      'RAG',
+      'Voyage AI embeddings',
+      'pgvector',
+      'MLOps',
+      'SHAP',
+      'Optuna',
+      'MLflow',
+    ],
+  },
+  {
+    label: 'Languages',
+    items: ['TypeScript', 'Python', 'Java', 'C#', 'PHP', 'SQL'],
+  },
+  {
+    label: 'Backend',
+    items: ['Node.js', 'tRPC', 'FastAPI', 'Prisma', 'async SQLAlchemy', 'REST', 'BullMQ'],
+  },
+  {
+    label: 'Frontend',
+    items: ['Next.js (App Router)', 'React', 'Tailwind CSS'],
+  },
+  {
+    label: 'Data & Infra',
+    items: ['PostgreSQL', 'Redis', 'Docker', 'Nginx + PM2', 'Vercel', 'Clerk', 'Stripe'],
   },
 ] as const
 
@@ -200,17 +331,25 @@ export const usesGroups = [
   {
     title: 'Build stack',
     items: [
-      'Next.js, TypeScript, and React for product-facing interfaces.',
-      'Python for backend workflows, automation, and AI orchestration.',
-      'PostgreSQL and Redis for persistence, caching, and queue-friendly system design.',
+      'Next.js (App Router), TypeScript, React, and Tailwind for product-facing interfaces.',
+      'tRPC and Prisma for end-to-end type safety; FastAPI and async SQLAlchemy for Python services.',
+      'BullMQ + Redis for asynchronous pipelines, queues, and background AI tasks.',
     ],
   },
   {
-    title: 'Daily environment',
+    title: 'AI & LLM stack',
     items: [
-      'VS Code, Zsh, and a terminal-first workflow.',
-      'Figma, Notion, and lightweight systems for thinking in public and shipping in sequence.',
-      'TablePlus, Bruno, and GitHub for operational clarity.',
+      'Anthropic Claude SDK with LangGraph for multi-agent orchestration.',
+      'RAG with Voyage AI embeddings and pgvector for semantic search.',
+      'Evaluation harnesses for faithfulness, safety, and red-teaming before anything ships.',
+    ],
+  },
+  {
+    title: 'Infrastructure',
+    items: [
+      'PostgreSQL and Redis for persistence, caching, and queues.',
+      'Docker, Nginx + PM2, and Vercel for deployment.',
+      'Clerk for authentication and Stripe for billing.',
     ],
   },
   {
@@ -223,7 +362,7 @@ export const usesGroups = [
 ] as const
 
 export const contactReasons = [
-  'Senior fullstack or AI engineering roles',
+  'Senior or lead AI / full-stack engineering roles',
   'Product partnerships where engineering quality changes the outcome',
   'Selective freelance work with clear scope and meaningful ambition',
 ] as const
