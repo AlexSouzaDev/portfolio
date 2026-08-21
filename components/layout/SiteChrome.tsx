@@ -1,15 +1,11 @@
-'use client'
-
-import { CursorProvider } from '@/components/cursor/CursorProvider'
 import { SiteNav } from '@/components/layout/SiteNav'
-import { SpotlightLayer } from '@/components/ui/SpotlightLayer'
 
+/* No cursor provider, no spotlight layer, no magnetic anything. */
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
-    <CursorProvider>
-      <SpotlightLayer />
+    <>
       <SiteNav />
       {children}
-    </CursorProvider>
+    </>
   )
 }

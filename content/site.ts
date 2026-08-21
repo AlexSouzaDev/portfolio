@@ -185,92 +185,114 @@ export const socialProof = [
 
 export const workArchive = [
   {
+    slug: 'impulsolead',
     title: 'ImpulsoLead',
     type: 'Fullstack AI SaaS · CTO',
     year: '2025 — Present',
     description:
       'Multi-tenant B2B SaaS for Brazilian real-estate teams. End-to-end architecture (Next.js, tRPC, Prisma, PostgreSQL), a LangGraph + Claude agent layer across 11 task types, dual payment gateway (Stripe + InfinitePay), and full i18n + LGPD compliance.',
     href: 'https://impulsolead.com',
+    stack: ['Next.js', 'tRPC', 'Prisma', 'PostgreSQL', 'LangGraph', 'Claude', 'Stripe', 'InfinitePay'],
   },
   {
+    slug: 'craft',
     title: 'CRAFT',
     type: 'LLM research library · Python',
     year: '2026',
     description:
       'Causal Rationale Attribution Faithfulness Test — empirically checks whether an LLM agent’s stated reasoning causally drove its decision via a randomized perturbation experiment with a placebo control. Zero runtime deps, mypy-clean, CI-ready CLI with a --fail-under gate.',
     href: 'https://github.com/AlexSouzaDev/craft',
+    stack: ['Python', 'mypy', 'CLI'],
   },
   {
+    slug: 'red-agent',
     title: 'red-agent',
     type: 'Adversarial LLM harness · TypeScript',
     year: '2026',
     description:
       'Stress-testing framework that injects YAML-defined attacks into tool-using agents and uses a Claude LLM-judge to classify compromise vs. safe refusal vs. detection. 3 victim models, 5 attack categories, 4 safety metrics, persisted via Prisma with a Next.js dashboard.',
     href: 'https://github.com/AlexSouzaDev/red-agent',
+    stack: ['TypeScript', 'Claude', 'Prisma', 'Next.js', 'YAML'],
   },
   {
+    slug: 'treeport',
     title: 'treeport',
     type: 'AI coding-agent orchestrator · Python',
     year: '2026',
     description:
       'Runs AI coding agents (Claude Code, Aider, GPT-4o, Gemini) inside isolated Docker containers backed by git worktrees, then fast-forward merges the results. asyncio + Pydantic v2 + Typer, 5 backends, 48 passing tests.',
     href: 'https://github.com/AlexSouzaDev/treeport',
+    stack: ['Python', 'asyncio', 'Pydantic v2', 'Typer', 'Docker', 'git worktrees'],
   },
   {
+    slug: 'cadre',
     title: 'CADRE',
     type: 'Multi-agent SIEM · Python',
     year: '2026',
     description:
       'Tests whether LangGraph-orchestrated agents outperform a monolithic LLM on threat-detection accuracy and cost. Ingests CIC-IDS2017 and UNSW-NB15, streams events over Redis, and gates response actions behind a sandboxed tRPC human-approval UI.',
     href: 'https://github.com/AlexSouzaDev/CADRE',
+    stack: ['Python', 'LangGraph', 'Redis', 'tRPC'],
   },
   {
+    slug: 'cardioml',
     title: 'cardioML',
     type: 'ML pipeline · Python',
     year: '2026',
     description:
       'Reproducible heart-disease classification benchmarking 5 classifiers with Optuna tuning, MLflow tracking, and SHAP explainability. Reaches 0.93 AUC-ROC with SMOTE applied correctly inside the training fold.',
     href: 'https://github.com/AlexSouzaDev/cardioML',
+    stack: ['Python', 'Optuna', 'MLflow', 'SHAP', 'SMOTE'],
   },
   {
+    slug: 'inventory-api',
     title: 'Inventory-API',
     type: 'Backend system design · FastAPI',
     year: '2025',
     description:
       'Enterprise inventory API with ACID-compliant stock transfers: deterministic row-locking, atomic decrements, and DB-trigger-enforced immutable audit logs. Clean Controller–Service–Repository architecture; full stack starts with one docker compose up.',
     href: 'https://github.com/AlexSouzaDev/Inventory-API',
+    stack: ['FastAPI', 'PostgreSQL', 'Docker'],
   },
   {
+    slug: 'applevault',
     title: 'AppleVault',
     type: 'Consumer product · TypeScript',
     year: '2025',
     description:
       'Instant iPhone resale valuation with a personal device vault. Next.js (App Router), Clerk auth, tRPC, Prisma, and Tailwind, with a real-time price formula gated behind authentication.',
     href: 'https://github.com/AlexSouzaDev/AppleVault',
+    stack: ['Next.js', 'Clerk', 'tRPC', 'Prisma', 'Tailwind'],
   },
   {
+    slug: 'n-body',
     title: 'n-body',
     type: 'Scientific computing · C++',
     year: '2026',
     description:
       'High-performance N-body gravitational simulator for the solar system, built in C++20 with symplectic integrators and real NASA ephemeris data.',
     href: 'https://github.com/AlexSouzaDev/n-body',
+    stack: ['C++20', 'NASA ephemeris'],
   },
   {
+    slug: 'impulsosearch',
     title: 'ImpulsoSearch',
     type: 'AI search infrastructure',
     year: '2024 — Present',
     description:
       'Search and discovery layer for sourcing high-intent opportunities from noisy, unstructured real-estate channels.',
     href: 'https://impulsosearch.com',
+    stack: ['Search infrastructure'],
   },
   {
+    slug: 'youralexandria',
     title: 'YourAlexandria',
     type: 'Personal library SaaS',
     year: '2025',
     description:
       'A tiered-subscription reading platform with EPUB and PDF rendering, annotation layers (quotes, bookmarks, notes), and per-user storage accounting. Built on Next.js 15, Drizzle ORM, Neon Postgres, Cloudflare R2, Clerk, and Stripe.',
     href: 'https://yoalexa-five.vercel.app',
+    stack: ['Next.js 15', 'Drizzle ORM', 'Neon Postgres', 'Cloudflare R2', 'Clerk', 'Stripe'],
   },
 ] as const
 
@@ -365,4 +387,19 @@ export const contactReasons = [
   'Senior or lead AI / full-stack engineering roles',
   'Product partnerships where engineering quality changes the outcome',
   'Selective freelance work with clear scope and meaningful ambition',
+] as const
+
+export const principles = [
+  {
+    title: 'Build for the real bottleneck',
+    body: 'The right solution is rarely the flashiest one. I start with where time, trust, or decision quality is actually being lost.',
+  },
+  {
+    title: 'Protect the system while moving quickly',
+    body: 'Fast shipping matters. So does not creating future drag every time speed is required. I optimize for both.',
+  },
+  {
+    title: 'Use AI with product logic',
+    body: 'AI is valuable when it sharpens a workflow, qualifies intent, or increases operator leverage. Everything else is noise.',
+  },
 ] as const
