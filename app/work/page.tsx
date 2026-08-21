@@ -1,53 +1,49 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { createMetadata, workArchive } from '@/content/site'
-import { PageHero } from '@/components/sections/PageHero'
-import { FadeIn } from '@/components/motion/FadeIn'
-import { ScrambleText } from '@/components/ui/ScrambleText'
+import { PageHead } from '@/components/print/PageHead'
+import { Register, RegisterRow } from '@/components/print/Register'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 
 export const metadata: Metadata = createMetadata(
   'Work',
-  'Selected products and engineered systems by Alex De Souza — fullstack engineer and AI builder.',
+  'Selected products and engineered systems by Alex De Souza — AI engineer and full-stack builder.',
   '/work'
 )
 
 export default function WorkPage() {
   return (
-    <main>
-      <PageHero
-        eyebrow="Work"
-        title="A compact portfolio with actual product pressure behind it."
-        body="I prefer a selective archive: fewer entries, better judgment, stronger systems."
-        cta={{ href: '/contact', label: 'Discuss a build' }}
-      />
-      <section className="px-5 pb-20 sm:px-8 lg:px-16 lg:pb-28">
-        <div className="mx-auto max-w-7xl divide-y divide-[var(--line)] border-t border-[var(--line)]">
-          {workArchive.map((project, index) => (
-            <FadeIn key={project.title} delay={index * 0.05}>
-              <Link
-                href={project.href}
-                className="group grid gap-6 py-10 transition-colors hover:text-[var(--text)] md:grid-cols-[1.2fr_0.4fr_1fr]"
-                data-cursor-label="VIEW"
+    <>
+      <main>
+        <PageHead
+          mark="The index"
+          title="A selective archive, kept short on purpose."
+          body="Fewer entries, better judgment, stronger systems. Every line below opens a case file."
+        />
+
+        <section className="mx-auto max-w-sheet px-[var(--gutter)] pb-[clamp(3.5rem,8vw,7rem)]">
+          <Register>
+            {workArchive.map((project, i) => (
+              <RegisterRow
+                key={project.slug}
+                entry={project.year}
+                href={`/work/${project.slug}`}
+                delay={i * 45}
               >
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.26em] text-[var(--muted)]">
-                    {project.type}
-                  </p>
-                  <h2 className="mt-4 text-2xl font-semibold tracking-[-0.05em] text-[var(--text)] sm:text-3xl">
-                    <ScrambleText text={project.title} />
-                  </h2>
-                </div>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {project.year}
+                <h2 className="sc m-0 text-[clamp(1.15rem,2.4vw,1.6rem)] font-medium">
+                  {project.title}
+                </h2>
+                <p className="sc mt-0.5 text-[0.82rem] text-ink-soft">
+                  {project.type}
                 </p>
-                <p className="text-sm leading-7 text-[var(--muted)]">{project.description}</p>
-              </Link>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
+                <p className="mt-2 text-[0.94em] leading-relaxed text-ink-soft">
+                  {project.description}
+                </p>
+              </RegisterRow>
+            ))}
+          </Register>
+        </section>
+      </main>
       <SiteFooter />
-    </main>
+    </>
   )
 }

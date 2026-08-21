@@ -1,53 +1,57 @@
 import Link from 'next/link'
 import { site } from '@/content/site'
-import { MagneticButton } from '@/components/ui/MagneticButton'
 
+/** The colophon. Every printed book ends with one. */
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[var(--line)] px-5 py-16 sm:px-8 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr]">
-          <div className="space-y-4">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted)]">
-              Built for signal
+    <footer className="border-t border-rule">
+      <div className="mx-auto max-w-sheet px-[var(--gutter)] py-12">
+        <div className="grid gap-8 sm:grid-cols-[1fr_auto] sm:items-end">
+          <div className="max-w-measure">
+            <p className="font-mono text-micro uppercase text-ink-soft">Colophon</p>
+            <p className="mt-3">
+              Set in <span className="sc">EB Garamond</span> and{' '}
+              <span className="sc">IBM Plex Mono</span>, with small caps and
+              oldstyle figures throughout. Built on Next.js and TypeScript,
+              exported static, and served from {site.location}.
             </p>
-            <h2 className="max-w-xl text-2xl font-semibold tracking-[-0.05em] text-[var(--text)] sm:text-3xl">
-              Strong products earn attention twice: once visually, then again through execution.
-            </h2>
           </div>
-          <div className="flex flex-col items-start gap-4 md:items-end md:justify-end">
-            <MagneticButton href="/contact" cursorLabel="GO">
-              Start a conversation
-            </MagneticButton>
-            <p className="text-xs text-[var(--muted)]">{site.location}</p>
-          </div>
-        </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-[var(--line)] pt-8 text-[11px] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Alex De Souza. Fullstack & AI Engineer.</p>
-          <div className="flex items-center gap-6">
-            <Link
+          <nav className="flex flex-wrap items-baseline gap-x-6 gap-y-2 sm:justify-end">
+            <a
               href={site.social.github}
               target="_blank"
               rel="noreferrer"
-              className="liquid-underline uppercase tracking-[0.15em] transition-colors hover:text-[var(--text)]"
+              className="sc ink-bleed text-ink-soft transition-colors duration-300 ease-press hover:text-ink"
             >
               GitHub
-            </Link>
+            </a>
+            <a
+              href={site.social.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="sc ink-bleed text-ink-soft transition-colors duration-300 ease-press hover:text-ink"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={`mailto:${site.email}`}
+              className="sc ink-bleed text-ink-soft transition-colors duration-300 ease-press hover:text-ink"
+            >
+              Email
+            </a>
             <Link
               href="/work"
-              className="liquid-underline uppercase tracking-[0.15em] transition-colors hover:text-[var(--text)]"
+              className="sc ink-bleed text-ink-soft transition-colors duration-300 ease-press hover:text-ink"
             >
               Work
             </Link>
-            <Link
-              href="/uses"
-              className="liquid-underline uppercase tracking-[0.15em] transition-colors hover:text-[var(--text)]"
-            >
-              Uses
-            </Link>
-          </div>
+          </nav>
         </div>
+
+        <p className="figures-lining mt-10 border-t border-rule pt-5 font-mono text-micro uppercase text-ink-soft">
+          &copy; {new Date().getFullYear()} Alex De Souza &nbsp;&middot;&nbsp; {site.role}
+        </p>
       </div>
     </footer>
   )

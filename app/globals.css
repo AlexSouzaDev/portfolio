@@ -2,14 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ══════════════════════════════════════════════════════════════
+   THE STOCK
+   A letterpress card has no dark mode. This is a single committed
+   theme; every colour is painted explicitly.
+   ══════════════════════════════════════════════════════════════ */
+
 :root {
-  --bg: #080808;
-  --bg-elevated: #111110;
-  --text: #f0ece1;
-  --muted: #6b6660;
-  --accent: #d4ff3a;
-  --line: rgba(255, 255, 255, 0.09);
-  --shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  --paper: #eae4d8;
+  --paper-lift: #f2ede3;
+  --paper-shade: #dbd4c4;
+  --rule: #c4bca8;
+  --ink-soft: #665f53;
+  --ink: #1e1c18;
+  --seal: #6b2223;
+
+  --measure: 68ch;
+  --gutter: clamp(1.5rem, 5vw, 5.5rem);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* The card is 3.5in x 2in. The format is a brand asset. */
+  --card-ratio: 1.75;
 }
 
 * {
@@ -18,28 +31,41 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  background: var(--paper);
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100svh;
   overflow-x: hidden;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans), sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif), Garamond, 'Times New Roman', serif;
+  /* EB Garamond runs a small x-height. 16px is too small here. */
+  font-size: clamp(17.5px, 1.05vw, 19.5px);
+  line-height: 1.72;
+  font-variant-numeric: oldstyle-nums proportional-nums;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-body::after {
+/* Paper grain — the fibre in the stock. Held under 6%. */
+body::before {
+  content: '';
   position: fixed;
   inset: 0;
-  z-index: -1;
-  opacity: 0.025;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  z-index: 0;
   pointer-events: none;
-  content: '';
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Lift content above the fixed grain overlay. :where() keeps this at zero
+   specificity so positioning utilities always win over it. */
+:where(main, header, footer) {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -51,106 +77,146 @@ button,
 input,
 textarea {
   font: inherit;
+  color: inherit;
 }
 
 ::selection {
-  background: var(--accent);
-  color: #080808;
+  background: var(--paper-shade);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline: 1px solid var(--seal);
+  outline-offset: 4px;
 }
 
-.custom-cursor-active,
-.custom-cursor-active * {
-  cursor: none !important;
+/* ══════════════════════════════════════════════════════════════
+   THE CASE — typographic primitives
+   ══════════════════════════════════════════════════════════════ */
+
+/* Small caps. NEVER combine with text-transform: uppercase — the
+   feature has nothing left to substitute and the effect is lost. */
+.sc {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.085em;
 }
 
-.custom-cursor-ring {
-  pointer-events: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  display: flex;
-  height: 28px;
-  width: 28px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  border: 1px solid rgba(240, 236, 225, 0.5);
-  background: transparent;
-  transition: width 200ms ease, height 200ms ease, border-color 200ms ease;
+/* Oldstyle figures belong in running text. */
+.figures-old {
+  font-variant-numeric: oldstyle-nums proportional-nums;
 }
 
-.custom-cursor-dot {
-  pointer-events: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  height: 4px;
-  width: 4px;
-  border-radius: 999px;
-  background: var(--text);
+/* Lining, tabular figures belong in anything that forms a column. */
+.figures-lining,
+table {
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
-.custom-cursor-label {
-  transform: scale(0.5);
-  white-space: nowrap;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.26em;
-  color: var(--text);
+/* The impression. Light catches the lower lip of the well, shade
+   sits on the upper. Display sizes on paper only — never body copy,
+   never the mono face. */
+.deboss {
+  text-shadow:
+    0 1px 0 rgba(255, 253, 246, 0.62),
+    0 -1px 0 rgba(30, 28, 24, 0.13);
 }
 
-.spotlight-layer {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  background:
-    radial-gradient(
-      300px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-      rgba(255, 255, 255, 0.025),
-      transparent 60%
-    );
+.measure {
+  max-width: var(--measure);
 }
 
-.liquid-underline {
+/* ══════════════════════════════════════════════════════════════
+   MOTION — five movements, derived from the press
+   Governing rule: content is visible in the HTML by default.
+   Animation adds to a rendered page; it never gates one.
+   The [data-press] pre-state is applied by JS, only to elements
+   that start below the fold, and always released by a failsafe.
+   ══════════════════════════════════════════════════════════════ */
+
+/* 01 — Impression: a plate meeting paper */
+.press {
+  transition:
+    opacity 720ms var(--ease),
+    transform 720ms var(--ease);
+}
+
+.press[data-press] {
+  opacity: 0;
+  transform: translateY(10px) scale(1.006);
+}
+
+/* 02 — Rule draw: hairlines enter from their left origin */
+.rule-draw {
+  transform-origin: left center;
+  transition: transform 620ms var(--ease);
+}
+
+.rule-draw[data-press] {
+  transform: scaleX(0);
+}
+
+/* 03 — Ink bleed: underlines grow from the centre outward */
+.ink-bleed {
   background-image: linear-gradient(currentColor, currentColor);
-  background-position: 0 100%;
+  background-position: 50% 100%;
   background-repeat: no-repeat;
-  background-size: 0% 1px;
-  transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  background-size: 0 1px;
+  padding-bottom: 0.08em;
+  transition:
+    background-size 320ms var(--ease),
+    color 240ms var(--ease);
 }
 
-.liquid-underline:hover {
+.ink-bleed:hover,
+.ink-bleed:focus-visible {
   background-size: 100% 1px;
 }
 
-.marquee-track {
-  animation: marquee var(--marquee-duration, 32s) linear infinite;
+/* Body links are underlined at rest and only shift colour. */
+.link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  padding-bottom: 0.06em;
+  transition: color 240ms var(--ease);
 }
 
-.terminal-scrollbar::-webkit-scrollbar {
-  width: 6px;
+.link:hover {
+  color: var(--seal);
 }
 
-.terminal-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: rgba(240, 236, 225, 0.15);
-}
-
-@keyframes marquee {
+/* 04 — Plate change: route transitions cross-dissolve through paper.
+   Pure CSS on a remounting template — no JS, no AnimatePresence. */
+@keyframes plate-change {
   from {
-    transform: translateX(0%);
+    opacity: 0;
+    transform: translateY(6px);
   }
   to {
-    transform: translateX(-33.33%);
+    opacity: 1;
+    transform: none;
   }
+}
+
+.plate {
+  animation: plate-change 380ms var(--ease) both;
+}
+
+/* 05 — Press-in: the calling card settling onto the page at load */
+@keyframes press-in {
+  from {
+    opacity: 0;
+    transform: scale(1.012);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.press-in {
+  animation: press-in 1100ms var(--ease) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -164,5 +230,11 @@ textarea {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .press[data-press],
+  .rule-draw[data-press] {
+    opacity: 1;
+    transform: none;
   }
 }
