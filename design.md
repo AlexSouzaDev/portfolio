@@ -1,337 +1,224 @@
-# Portfolio — Front-End Design Document
+# alexsouza.dev — Design Document
 
-## 1. Stack Overview
+The site is a **stationery suite**. Every route is a different printed
+document issued by the same house, set from the same case of type. The
+source artefact is the Pierce & Pierce calling card from *American
+Psycho* — bone stock, one ink, true small caps, oldstyle figures, and
+about two thirds of the surface left empty.
+
+---
+
+## 1. Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript 5 (strict mode) |
-| Styling | Tailwind CSS 3.4 + custom CSS |
-| Animations | Framer Motion 12 |
-| Fonts | Syne (display) + JetBrains Mono (mono) |
-| AI | Anthropic Claude SDK (`claude-sonnet-4-6`) |
-| Email | Resend |
-| Deployment | Vercel |
+| Framework | Next.js 15 (App Router), `output: 'export'` |
+| Language | TypeScript 5 (strict) |
+| Styling | Tailwind CSS 3.4 + CSS custom properties |
+| Motion | CSS transitions + IntersectionObserver. **No animation library.** |
+| Typefaces | EB Garamond (variable, self-hosted) · IBM Plex Mono (self-hosted) |
+| Hosting | Apache, static files, `public/.htaccess` |
+
+Runtime dependencies are `next`, `react`, `react-dom`, `clsx`,
+`tailwind-merge`. Nothing else.
+
+There are **no API routes** — the export is fully static.
 
 ---
 
-## 2. Directory Structure
+## 2. Content model
+
+Nearly all copy lives in [`content/site.ts`](content/site.ts) as typed
+`as const` exports. Components are thin renderers over them. To change
+what the site says, edit that file.
+
+| Export | Feeds |
+|--------|-------|
+| `site` | metadata, schema, footer, card foot |
+| `navItems` | running head |
+| `featuredProjects` | home index (5 entries) |
+| `workArchive` | `/work` index and every `/work/[slug]` case file (11 entries) |
+| `capabilityPillars` | home "Practice" |
+| `timeline` | "Record" register (home + about) |
+| `counters` | "Figures" |
+| `principles` | about — operating principles |
+| `skillGroups`, `education`, `certifications` | about |
+| `usesGroups` | `/uses` |
+| `contactReasons` | reply card |
+
+`heroMetrics` and `socialProof` are legacy and unused.
+
+Each `workArchive` entry carries `slug`, `title`, `type`, `year`,
+`description`, `href`, and `stack[]`. Case files are generated from
+these via `generateStaticParams`.
+
+---
+
+## 3. Routes
+
+| Route | Document |
+|-------|----------|
+| `/` | The calling card — one viewport, then index, practice, record, figures, reply |
+| `/work` | The index — a ruled register of all 11 entries |
+| `/work/[slug]` | The case file — a memo header over a typeset write-up |
+| `/about` | Letterhead, then record, principles, case, education, certifications |
+| `/uses` | The specification sheet |
+| `/contact` | The reply card |
+
+`/blog` was retired. If notes ship later, the route is `/notes` and it
+launches with real content — never a "coming soon" plate.
+
+---
+
+## 4. The stock (palette)
+
+Single committed theme. A letterpress card has no dark mode.
+
+| Token | Hex | Use |
+|-------|-----|-----|
+| `--paper` | `#EAE4D8` | page ground |
+| `--paper-lift` | `#F2EDE3` | card face |
+| `--paper-shade` | `#DBD4C4` | impression, soft borders |
+| `--rule` | `#C4BCA8` | hairlines |
+| `--ink-soft` | `#665F53` | secondary text — 4.99:1 on paper (AA) |
+| `--ink` | `#1E1C18` | body, headings — 13.4:1 (AAA) |
+| `--seal` | `#6B2223` | rationed. four uses. |
+
+**Seal is the only chromatic colour in the system.** It appears on the
+availability dot, link hover, focus rings, and error text. Nowhere else.
+If it starts showing up on buttons and headings, the system has failed.
+
+---
+
+## 5. The case (type)
+
+Both families are **self-hosted from `assets/fonts/`**.
+
+> Google Fonts' CDN subsets `smcp` and `onum` **out** of EB Garamond —
+> verified against `v33`, whose GSUB carries only `dnom frac liga locl
+> numr pnum rlig tnum`. The whole brand depends on those two features,
+> so the fonts here are the full variable binaries from `google/fonts`,
+> subset locally with the layout features preserved. Do not "simplify"
+> this back to `next/font/google`.
+
+| Role | Face | Notes |
+|------|------|-------|
+| Everything | EB Garamond variable 400–800 + italic | `smcp`, `onum`, `lnum`, `tnum`, `c2sc` |
+| Technical strings | IBM Plex Mono 400 / 500 | file paths, stacks, dates, status |
+
+### Rules
+
+- **Small caps:** `font-variant-caps: small-caps` on **mixed-case** text.
+  Never combine with `text-transform: uppercase` — the feature has
+  nothing left to substitute and the effect is lost. Use `.sc`, which
+  also applies the required `0.085em` tracking.
+- **Figures:** oldstyle in running text (the `body` default); lining +
+  tabular in anything that forms a column (`.figures-lining`, `table`).
+- **Size floor:** nothing below 15px is set in Garamond — its x-height
+  is small and its hairlines go fragile. Micro-labels are mono.
+- **Body size:** `clamp(17.5px, 1.05vw, 19.5px)`. 16px is too small here.
+- **Deboss:** `.deboss` only on display sizes on paper. Never on body
+  copy, never on the mono face. One notch too far and it is 2008 emboss.
+
+---
+
+## 6. Layout
+
+- Card format is **1.75:1** (3.5×2in) — used for the home hero and every
+  case-file header. The format is a brand asset.
+- Page gutter `clamp(1.5rem, 5vw, 5.5rem)`; sheet width `82rem`.
+- Section padding `clamp(3.5rem, 8vw, 7rem)`.
+- Body measure `68ch`, hard.
+- Hairlines are 1px in `--rule`. **Nothing is rounded** — there are no
+  rounded corners in letterpress — and there are no box shadows anywhere
+  except the card itself.
+
+---
+
+## 7. Motion
+
+Five named movements. **Governing rule: content is visible in the HTML
+by default.** Animation adds to a rendered page; it never gates one.
+
+| Movement | Mechanism |
+|----------|-----------|
+| Impression | `.press` — opacity + `scale(1.006)`, 720ms |
+| Rule draw | `.rule-draw` — `scaleX(0→1)` from left origin, 620ms |
+| Ink bleed | `.ink-bleed` — underline grows from centre, 320ms |
+| Plate change | `.plate` on `app/template.tsx` — 380ms, pure CSS |
+| Figure set | `Figure` — count in oldstyle figures, rAF, 1400ms |
+
+`components/motion/Press.tsx` applies the `[data-press]` pre-state **on
+the client, only to elements that start below the fold**, and always
+releases it — via IntersectionObserver, or a 4-second failsafe. So:
+nothing flashes, nothing scrolled past is stranded invisible, and a page
+without JS is a page that reads.
+
+One easing curve site-wide: `cubic-bezier(0.22, 0.61, 0.36, 1)`. Only
+`transform` and `opacity` animate — never `filter`, never layout
+properties. `prefers-reduced-motion` collapses everything to instant.
+
+### Deliberately absent
+
+Custom cursors, spotlight layers, magnetic buttons, marquees, scramble
+text, tilt cards, gooey morphing, blur reveals, page-transition sweeps.
+All of these were in the previous build. None belong here.
+
+---
+
+## 8. Components
 
 ```
-portfolio/
-├── app/
-│   ├── layout.tsx               # Root layout — providers, fonts, metadata
-│   ├── page.tsx                 # Home page (/)
-│   ├── about/page.tsx           # About page
-│   ├── work/page.tsx            # Work/projects page
-│   ├── blog/page.tsx            # Blog placeholder
-│   ├── uses/page.tsx            # Tools & setup page
-│   ├── contact/page.tsx         # Contact page
-│   ├── api/
-│   │   ├── chat/route.ts        # Claude AI chat endpoint
-│   │   └── contact/route.ts     # Contact form email endpoint
-│   ├── globals.css              # Global styles, CSS variables, utilities
-│   ├── robots.ts                # SEO robots.txt
-│   ├── sitemap.ts               # Dynamic sitemap
-│   └── opengraph-image.tsx      # Dynamic OG image (1200×630)
-├── components/
-│   ├── Nav.tsx                  # Responsive navigation
-│   ├── CursorProvider.tsx       # Custom cursor
-│   ├── PageTransition.tsx       # Route-change overlay animation
-│   ├── ScrollProgress.tsx       # Top scroll progress bar
-│   └── sections/
-│       ├── Hero.tsx             # Split hero with rotating headline
-│       ├── Marquee.tsx          # Infinite scrolling banner
-│       ├── SelectedWork.tsx     # Project showcase grid
-│       ├── AboutStrip.tsx       # Two-column about section
-│       ├── Skills.tsx           # Three-column tech stack
-│       ├── Certifications.tsx   # Three-column certifications
-│       ├── TerminalChat.tsx     # AI chat terminal (server)
-│       ├── TerminalChatClient.tsx # Client wrapper (dynamic import)
-│       ├── Contact.tsx          # Contact form + channels
-│       └── Footer.tsx           # Footer with last-commit info
-├── lib/
-│   └── utils.ts                 # clsx + tailwind-merge helper
-└── public/
-    ├── photo.jpg                # Hero photo
-    └── icon.jpg                 # Favicon
+components/
+├── layout/     SiteChrome · SiteNav (running head) · SiteFooter (colophon)
+├── print/      Card · SectionHead · Register/RegisterRow · PageHead · Figure
+├── motion/     Press
+└── sections/   HomeCard · WorkIndex · Disciplines · Journey · Numbers
+                ReplyCard · ReplyForm
 ```
 
----
-
-## 3. Routes & Pages
-
-| Route | File | Description |
-|-------|------|-------------|
-| `/` | `app/page.tsx` | Hero → Marquee → SelectedWork → AboutStrip → Skills → Certifications → TerminalChat → Contact → Footer |
-| `/about` | `app/about/page.tsx` | Full bio: origin, journey, build philosophy, location, academics |
-| `/work` | `app/work/page.tsx` | Project archive with 4 entries |
-| `/blog` | `app/blog/page.tsx` | "Coming soon" placeholder |
-| `/uses` | `app/uses/page.tsx` | Editor, terminal, machine, AI tools, apps, infrastructure |
-| `/contact` | `app/contact/page.tsx` | Standalone contact form page |
+`SiteNav`, `SiteFooter` and every `print/` part except `Figure` are
+server components. The only client components are `Press`, `Figure` and
+`ReplyForm`.
 
 ---
 
-## 4. Design System
+## 9. The reply card
 
-### Color Palette
-
-| Token | Variable | Hex | Use |
-|-------|----------|-----|-----|
-| Background | `--bg` | `#0D0D0D` | Page background |
-| Surface | `--surface` | `#141414` | Cards, secondary backgrounds |
-| Primary | `--primary` | `#F0EBE0` | Body text, headings |
-| Secondary | `--secondary` | `#888880` | Muted labels, captions |
-| Accent | `--accent` | `#FFE500` | CTAs, highlights, active states |
-| Border | `--border` | `#2A2A2A` | Dividers, outlines |
-| Danger | `--danger` | `#FF2D00` | Error states |
-| Success | `--success` | `#00C853` | Success states |
-
-### Typography
-
-| Role | Font | Weights | Variable |
-|------|------|---------|----------|
-| Display / Headings | Syne | 400, 500, 700, 800 | `--font-syne` |
-| Mono / Labels / Body | JetBrains Mono | 400, 500 | `--font-jetbrains` |
-
-Both fonts are loaded from Google Fonts with `display: swap`.
-
-### Custom Tailwind Extensions
-
-```
-colors: bg, surface, primary, secondary, accent, border, danger, success
-fontFamily: display (Syne), mono (JetBrains Mono)
-fontSize: label → 11px / letter-spacing: 0.12em
-borderWidth: 3 → 3px
-```
-
-### Custom CSS Utilities (`globals.css`)
-
-| Class | Purpose |
-|-------|---------|
-| `.custom-cursor` | 18px circular cursor, yellow border |
-| `.scroll-progress` | 2px fixed top bar |
-| `.noise-overlay` | SVG noise texture at 4% opacity |
-| `.terminal-scroll` | Yellow scrollbar thumb on dark track |
-| `.shadow-hard-accent` | Yellow-offset box shadow |
-| `.card-hover` | Lift on hover (−3px + shadow) |
-| `.cursor-blink` | Blinking text cursor |
-| `.nav-link` | Clip-path underline slide animation |
-
----
-
-## 5. Components
-
-### Global UI
-
-**`Nav.tsx`** — Client component, always mounted in layout.
-- Desktop: fixed header with monogram, nav links, availability pill.
-- Mobile: bottom drawer menu with slide-up animation.
-- Active route highlighted with yellow underline.
-- Availability status driven by `NEXT_PUBLIC_AVAILABLE` env var ("AVAILABLE FOR PROJECTS" or "BUSY BUILDING").
-
-**`CursorProvider.tsx`** — Client component.
-- Replaces OS cursor (`cursor: none` on `<html>`).
-- 18px circle, yellow border, expands to 32px on `<a>` / `<button>` hover.
-- Shows `+` symbol on link hover.
-- Uses `MutationObserver` to track dynamically added elements.
-- `aria-hidden="true"`.
-
-**`PageTransition.tsx`** — Client component.
-- Full-viewport yellow (`#FFE500`) stripe that slides in from left on route change and exits right.
-- Duration: 0.4s, easing `[0.16, 1, 0.3, 1]`.
-
-**`ScrollProgress.tsx`** — Client component.
-- Fixed 2px yellow bar at top of viewport.
-- Width interpolated from scroll position (passive listener).
-
----
-
-### Home Page Sections (render order)
-
-**`Hero.tsx`** — Client.
-- 58/42 split: text left, photo right.
-- Rotating headline words: "BUILDS." → "SHIPS." → "ARCHITECTS." → "SOLVES." (2.2s interval, Framer Motion fade-up/fade-down).
-- CTAs: "SEE MY WORK" (yellow fill) + "GET IN TOUCH" (outlined).
-- Data pills: links to live products and GitHub.
-- Photo: grayscale + contrast by default, reverts to color on hover.
-- Noise texture SVG overlay.
-- Mobile: stacks vertically.
-
-**`Marquee.tsx`**
-- Yellow banner, dark text.
-- Infinite horizontal scroll (25s CSS animation loop).
-- Content: skills, certifications, locations, availability.
-
-**`SelectedWork.tsx`** — Client.
-- 4-project showcase: ImpulsoLead, ImpulsoSearch, AppleVault, Inventory-API.
-- Alternating left/right image layout with 58/42 grid split.
-- Tech badge pills per project.
-- Scroll-triggered entry animations (`whileInView`, `once: true`).
-- "VIEW ALL PROJECTS" CTA at bottom.
-
-**`AboutStrip.tsx`** — Client.
-- 50/50 split: pull quote left, 4 paragraphs right.
-- Quote: *"I don't ship features. I ship products. There's a difference."*
-- Staggered scroll-reveal animations.
-- Mobile: stacks vertically with top border divider.
-
-**`Skills.tsx`** — Client.
-- 3-column grid: Core Stack / Infrastructure & AI / Currently Studying.
-- 8–9 items per column.
-- Staggered reveal on viewport entry.
-- Section counter: `[04]`.
-
-**`Certifications.tsx`** — Client.
-- 3-column grid: AI/ML / Full-Stack & Data / Security.
-- 6 certifications from Duke, IBM, Microsoft, UoL, CU Boulder.
-- Each entry: institution + name + motivational quote.
-- Section counter: `[03]`.
-
-**`TerminalChat.tsx`** / **`TerminalChatClient.tsx`** — Client (dynamic import, `ssr: false`).
-- Custom terminal UI with 3px border.
-- macOS-style title bar (yellow, gray, dark dots).
-- Initial "command" lines revealed with 80ms stagger.
-- User types → sends to `/api/chat` → Claude replies in character.
-- Blinking cursor during loading state.
-- Max input: 500 characters.
-- Custom yellow scrollbar.
-- `aria-label="Terminal input — ask Alex anything"`.
-
-**`Contact.tsx`** — Client.
-- 50/50 split: form left, channels right.
-- Fields: Name, Email, Message (500 char limit).
-- States: idle → sending → sent / error.
-- Live Lisbon time (WET timezone) displayed in real time.
-- External channels: Email, LinkedIn, GitHub, ImpulsoLead.
-- Submit button label updates on completion; error text in `--danger`.
-- Mobile: stacks vertically.
-
-**`Footer.tsx`** — Client.
-- 3-column grid: brand info / sitemap links / build info.
-- Dynamic copyright year.
-- Last commit fetched from GitHub API: shows "X days ago" or "X hours ago".
-- Links highlight to `--accent` on hover.
-- Mobile: single column.
-
----
-
-### UI / Experimental
-
-**`ui/gooey-text-morphing.tsx`**
-- Text morphing effect using SVG blur + threshold filter.
-- Dual-layer animation: one text fades in while the other fades out for a "gooey" blend.
-- Currently unused — placeholder for future enhancement.
-
----
-
-## 6. Animations
-
-| Effect | Mechanism | Details |
-|--------|-----------|---------|
-| Page transitions | Framer Motion | Yellow stripe, 0.4s, custom easing |
-| Section reveals | Framer Motion `whileInView` | Opacity + Y-axis, `once: true` |
-| Hero word rotation | Framer Motion | Fade-up swap, 2.2s interval |
-| Marquee scroll | CSS `@keyframes marquee` | 25s linear infinite |
-| Custom cursor | `requestAnimationFrame` | Smooth position tracking |
-| Card lift | CSS | `translateY(-3px)` + box shadow |
-| Nav underline | CSS `clip-path` | Slide-in on hover |
-| Cursor blink | CSS `@keyframes blink` | 1s step-end infinite |
-| Dot pulse | CSS `@keyframes pulse_dot` | Scale + opacity, 1.5s |
-| Fade-up | CSS `@keyframes fade-up` | Opacity + Y, 0.3s cubic-bezier |
-
----
-
-## 7. API Endpoints
-
-### `POST /api/chat`
-
-```
-Body:    { message: string }   // max 500 chars
-Returns: { reply: string }
-Model:   claude-sonnet-4-6
-Tokens:  200 max
-```
-
-Streams a response from Claude configured with a system prompt that describes Alex as the assistant's persona.
-
-### `POST /api/contact`
-
-```
-Body:    { name: string, email: string, message: string }
-Returns: { ok: true } | { error: string }
-Service: Resend
-To:      CONTACT_EMAIL env var (default: alexandre@impulsolead.com)
-```
-
-Validates field lengths (name/email: 200, message: 500) and email format before sending.
-
----
-
-## 8. Environment Variables
+`ReplyCard` renders a real form when `NEXT_PUBLIC_FORM_ENDPOINT` is set
+at build time (Formspree, Web3Forms, or similar), and the engraved
+address block with a `mailto:` when it is not. Static export means there
+is no server route to post to; this is the seam where one gets added.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_AVAILABLE` | No | `"true"` or `"false"` — nav availability status |
-| `CONTACT_EMAIL` | No | Recipient for contact form emails |
-| `RESEND_API_KEY` | Yes (contact form) | Resend service API key |
-| `ANTHROPIC_API_KEY` | Yes (chat) | Claude API key |
+| `NEXT_PUBLIC_FORM_ENDPOINT` | No | Form POST endpoint. Unset → mailto. |
 
 ---
 
-## 9. Data Sources
+## 10. SEO & accessibility
 
-All content is **hardcoded** in component files. There is no CMS or external data layer.
-
-| Content | Location |
-|---------|----------|
-| Projects (home) | `SelectedWork.tsx` |
-| Projects (archive) | `work/page.tsx` |
-| Skills | `Skills.tsx` |
-| Certifications | `Certifications.tsx` |
-| About bio | `about/page.tsx` |
-| Tools & uses | `uses/page.tsx` |
-| Nav links | `Nav.tsx` |
-| Contact channels | `Contact.tsx` |
-
-**Dynamic data:**
-- AI chat replies — Claude API at runtime.
-- Last commit date — GitHub API fetched in `Footer.tsx`.
-- Live clock — Lisbon WET timezone in `Contact.tsx`.
-- OG image — generated at `/opengraph-image.tsx`.
+- JSON-LD (Person, Organization, WebSite) in [`lib/schema.ts`](lib/schema.ts).
+- `app/sitemap.ts` covers the five pages plus all 11 case files.
+- Open Graph image is a static `public/og.jpg` (1200×630) — the calling
+  card, rendered in the real typeface.
+- Favicon `app/icon.png` — the Garamond `A`.
+- Contrast verified: ink 13.4:1, ink-soft 4.99:1, seal 8.8:1 on paper.
+- Focus rings are a 1px seal outline at 4px offset, on every interactive
+  element.
+- `scroll-padding-top: 5rem` keeps anchor targets clear of the running head.
 
 ---
 
-## 10. Responsive Design
+## 11. Gotchas
 
-- Single breakpoint: `768px` (`md` in Tailwind).
-- Layouts shift from 2–3 column grids to single column.
-- Border dividers shift from left/right to top/bottom.
-- Nav switches from fixed header to bottom drawer.
-- Font sizes use `clamp()` for fluid scaling.
-- Spacing: `px-8` → `px-6`, `py-24` → `py-12`.
-
----
-
-## 11. SEO & Accessibility
-
-- Dynamic sitemap (`sitemap.ts`) with `lastModified`, `changeFrequency`, `priority`.
-- OpenGraph image dynamically generated (`opengraph-image.tsx`, 1200×630).
-- Title template: `"Alex De Souza — %s | Founder & CTO"`.
-- Custom cursor: `aria-hidden="true"`.
-- Logo: `aria-label="Alex De Souza — Home"`.
-- Terminal input: `aria-label="Terminal input — ask Alex anything"`.
-- Marquee: `aria-label="Skills and identity marquee"`.
-- Semantic HTML: `<main>`, `<nav>`, `<section>`, `<footer>`.
-- External links: `rel="noopener noreferrer"`.
-
----
-
-## 12. Performance
-
-- `next/image` with `fill`, `sizes`, and `priority` for hero image.
-- Google Fonts with `display: swap` to avoid FOIT.
-- `TerminalChat` dynamically imported with `ssr: false` to avoid hydration overhead.
-- Scroll listeners use `{ passive: true }`.
-- Custom cursor updates via `requestAnimationFrame`.
-- No runtime CSS-in-JS — all styles are statically extracted at build time.
+- **Never run `next build` while `next dev` is running** on this repo —
+  it rewrites `.next` underneath the dev server and every page loses its
+  CSS until you restart.
+- **Alpha modifiers do not work on the colour tokens.** They are
+  `var(--x)` values, so `bg-paper/95` produces an invalid colour and
+  renders transparent. Use the solid token. (This is how the running
+  head shipped invisible during the rebuild.)
+- `:where(main, header, footer)` sets `position: relative; z-index: 1`
+  to lift content above the fixed grain overlay. It uses `:where()` so
+  its zero specificity never fights a positioning utility like `sticky`.

@@ -6,7 +6,7 @@ export const site = {
   description:
     'Alex De Souza — AI engineer and full-stack builder. I architect production LLM systems, multi-agent orchestration, and B2B SaaS. Founding engineer turned CTO at ImpulsoLead.',
   url: 'https://alexsouza.dev',
-  ogImage: '/opengraph-image',
+  ogImage: '/og.jpg',
   email: 'contact@alexsouza.dev',
   location: 'Aveiro, Portugal',
   role: 'Founding Engineer → CTO @ ImpulsoLead',

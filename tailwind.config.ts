@@ -22,8 +22,8 @@ const config: Config = {
       },
       fontSize: {
         // Mono micro-labels. Never set Garamond this small.
-        micro: ['0.62rem', { letterSpacing: '0.16em', lineHeight: '1.4' }],
-        mark: ['0.68rem', { letterSpacing: '0.14em', lineHeight: '1.5' }],
+        micro: ['0.7rem', { letterSpacing: '0.16em', lineHeight: '1.4' }],
+        mark: ['0.75rem', { letterSpacing: '0.14em', lineHeight: '1.5' }],
       },
       maxWidth: {
         measure: 'var(--measure)',
